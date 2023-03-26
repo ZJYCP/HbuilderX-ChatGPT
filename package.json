@@ -1,0 +1,95 @@
+{
+	"id": "HBuilderX-ChatGPT",
+	"name": "HBuilderX-ChatGPT代码助手",
+	"description": "HBuilderX-ChatGPT代码助手",
+	"displayName": "HBuilderX-ChatGPT代码助手",
+	"version": "0.1.1",
+	"publisher": "Glyn",
+	"engines": {
+		"HBuilderX": "^2.7.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"main": "./extension",
+	"contributes": {
+		"viewsContainers": {
+			"rightside": [
+				{
+					"id": "chatgpt",
+					"title": "chatgpt代码助手"
+				}
+			]
+		},
+		"views": {
+			"chatgpt": [
+				{
+					"id": "chatgpt.webview",
+					"title": "chatgpt-代码助手"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "chatgpt.explain",
+				"title": "ChatGPT: 代码解释"
+			},
+			{
+				"command": "chatgpt.findProblems",
+				"title": "ChatGPT: 代码找错"
+			},
+			{
+				"command": "chatgpt.refactor",
+				"title": "ChatGPT: 代码重构"
+			},
+			{
+				"command": "chatgpt.addTest",
+				"title": "ChatGPT: 生成测试代码"
+			},
+			{
+				"command": "chatgpt.setting",
+				"title": "ChatGPT: 插件设置"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"command": "chatgpt.explain",
+					"group": "z_commands",
+					"when": "editorTextFocus"
+				},
+				{
+					"command": "chatgpt.findProblems",
+					"group": "z_commands",
+					"when": "editorTextFocus"
+				},
+				{
+					"command": "chatgpt.refactor",
+					"group": "z_commands",
+					"when": "editorTextFocus"
+				},
+				{
+					"command": "chatgpt.addTest",
+					"group": "z_commands",
+					"when": "editorTextFocus"
+				},
+				{
+					"command": "chatgpt.setting",
+					"group": "z_commands"
+				},
+				{
+					"group": "z_commands"
+				}
+			]
+		}
+	},
+	"extensionDependencies": [
+		"plugin-manager"
+	],
+	"dependencies": {
+		"chatgpt": "^5.1.2",
+		"https-proxy-agent": "^5.0.1",
+		"isomorphic-fetch": "^3.0.0",
+		"node-fetch": "^2.6.9"
+	}
+}

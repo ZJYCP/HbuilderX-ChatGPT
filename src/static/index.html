@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>webview 样式编辑测试</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js">
+		</script>
+		<link rel="stylesheet" href="./custom.css">
+	</head>
+	<body>
+		<div id="app" v-cloak class="app">
+			<div v-for='(v,k,i) in list' :key='k' class="conversition">
+				<div class="question-block"><strong>You：</strong> <i>{{v[0]}}</i></div>
+				<div class="response-block"><strong>ChatGPT:</strong> {{v[1]}}</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data: {
+					list: {
+						'0': ['question',
+							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
+						],
+						'1': ['question',
+							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
+						]
+					},
+				},
+				computed: {
+
+				},
+				created() {
+
+				},
+				mounted() {
+					//注册监听
+					// this.$nextTick(() => {
+					//     window.addEventListener('hbuilderxReady', () => {
+					//         this.eventListener();
+					//     })
+					// });			
+				},
+				methods: {
+
+					eventListener() {
+
+					},
+
+					//webview的问题提交
+					submitHandle(question) {
+						hbuilderx.postMessage({
+							command: 'addQuestion',
+							data: question
+						});
+					}
+
+				}
+			});
+		</script>
+	</body>
+</html>
