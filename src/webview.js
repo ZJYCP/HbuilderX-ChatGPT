@@ -49,8 +49,8 @@ class ChatGPTViewProvider {
 					break;
 				}
 				case 'clearConv': {
-					this.parentMessageId = undefined
-					this.conversationId = undefined
+					//TODO,maybe use that
+					this.clearConversationId()
 				}
 			}
 		});
@@ -69,6 +69,9 @@ class ChatGPTViewProvider {
 	}
 
 	updateConfig() {
+		/**
+		 * 更新配置：重新获取API实例，清除对话框数据
+		 */
 		let config = hx.workspace.getConfiguration("chatgpt");
 		this.extensionConfig = {
 			selectedType: config.get('selectedType', "accessToken"),
@@ -76,8 +79,22 @@ class ChatGPTViewProvider {
 			ApiKey: config.get('ApiKey', ""),
 			proxy: config.get('proxy', "")
 		}
+		console.log("update config")
 		this._newAPI()
+		this.clearConversition()
+		// hx.window.showInformationMessage("ChatGPT-代码助手配置成功");
+		hx.window.setStatusBarMessage('ChatGPT-代码助手配置成功',1500,'info');
 
+	}
+	
+	
+	clearConversition(){
+		this.sendMessageToWebView({type:"clearConversition"})
+	}
+	
+	clearConversationId(){
+		this.parentMessageId = undefined
+		this.conversationId = undefined
 	}
 
 	// 实例化一个ChatGPT api实例
@@ -89,15 +106,15 @@ class ChatGPTViewProvider {
 			ChatGPTUnofficialProxyAPI
 		} = await import('chatgpt');
 		
-		this.parentMessageId = undefined
-		this.conversationId = undefined
+		this.clearConversationId()
+
 
 		if (this.extensionConfig.selectedType == "accessToken") {
 			if (this.extensionConfig.accessToken == "") {
 				hx.window.showErrorMessage('accessToken未设置', ['去设置', '关闭']).then((result) => {
 					if (result == '去设置') {
 						console.log("选择了设置");
-						hx.commands.executeCommand('chatgpt.setting')
+						hx.commands.executeCommand('workbench.action.openGlobalSettings')
 					} else if (result === '关闭') {
 						console.log("选择关闭");
 					}
@@ -116,7 +133,7 @@ class ChatGPTViewProvider {
 				hx.window.showErrorMessage('ApiKey未设置', ['去设置', '关闭']).then((result) => {
 					if (result == '去设置') {
 						console.log("选择了设置");
-						hx.commands.executeCommand('chatgpt.setting')
+						hx.commands.executeCommand('workbench.action.openGlobalSettings')
 					} else if (result === '关闭') {
 						console.log("选择关闭");
 					}
@@ -141,9 +158,6 @@ class ChatGPTViewProvider {
 						return nodeFetch.default(url, mergedOptions);
 					} : fetch
 				})
-				// this._chatGPTAPI = new ChatGPTAPI({
-				// 	apiKey: this.extensionConfig.ApiKey
-				// })
 			}
 		}
 	}

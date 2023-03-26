@@ -1,13 +1,15 @@
 var hx = require("hbuilderx");
-var {ChatGPTViewProvider} = require('./src/webview.js');
+var {
+	ChatGPTViewProvider
+} = require('./src/webview.js');
 var showSettingDialog = require('./src/setting.js')
 
 //添加在package第15行，通过事件激活插件
-	// "activationEvents": [
-	// 	"onCommand:extension.helloWorld",
-	// 	"onCommand:chatgpt.explain",
-	// 	"onView:chatgpt.webview"
-	// ],
+// "activationEvents": [
+// 	"onCommand:extension.helloWorld",
+// 	"onCommand:chatgpt.explain",
+// 	"onView:chatgpt.webview"
+// ],
 
 //该方法将在插件激活的时候调用
 async function activate(context) {
@@ -16,29 +18,50 @@ async function activate(context) {
 	let webviewPanel = hx.window.createWebView("chatgpt.webview", {
 		enableScritps: true
 	});
-	hx.window.showView({viewId: "chatgpt.webview"});
+
 	let provider = new ChatGPTViewProvider(webviewPanel);
-	
-	let eslintConfig = hx.workspace.getConfiguration("eslint-js")
-	
-	
+	hx.window.showView({
+		viewId: "chatgpt.webview"
+	});
+
+	// 监听配置修改
+	hx.workspace.onDidChangeConfiguration(function(event) {
+		if (event.affectsConfiguration("chatgpt.selectedType") || 
+			event.affectsConfiguration("chatgpt.accessToken") || 
+			event.affectsConfiguration("chatgpt.ApiKey") || 
+			event.affectsConfiguration("chatgpt.proxy")
+			) {
+			provider.updateConfig()
+		};
+	});
+
 	//注册事件
 	context.subscriptions.push(
 		hx.commands.registerCommand('chatgpt.explain', askGPTToExplain),
 		hx.commands.registerCommand('chatgpt.findProblems', askGPTWhyBroken),
 		hx.commands.registerCommand('chatgpt.refactor', askGPTToRefactor),
 		hx.commands.registerCommand('chatgpt.addTest', askGPTToAddTests),
-		hx.commands.registerCommand('chatgpt.setting', openSetting),
-		
+		// hx.commands.registerCommand('chatgpt.setting', openSetting),
+
 	)
-	
-	async function askGPTToExplain() { await askChatGPT('解释下面的这段代码'); }
-	async function askGPTWhyBroken() { await askChatGPT('这段代码有什么错误吗？'); }
-	async function askGPTToRefactor() { await askChatGPT('重构这段代码并说明做了哪些变更'); }
-	async function askGPTToAddTests() { await askChatGPT('为下面的代码生成测试代码'); }
-	
-	async function askChatGPT(promptPrefix){
-		if (!promptPrefix){
+
+
+	async function askGPTToExplain() {
+		await askChatGPT('解释下面的这段代码');
+	}
+	async function askGPTWhyBroken() {
+		await askChatGPT('这段代码有什么错误吗？');
+	}
+	async function askGPTToRefactor() {
+		await askChatGPT('重构这段代码并说明做了哪些变更');
+	}
+	async function askGPTToAddTests() {
+		await askChatGPT('为下面的代码生成测试代码');
+	}
+
+	async function askChatGPT(promptPrefix) {
+
+		if (!promptPrefix) {
 			promptPrefix = ""
 		} else {
 			let activeEditor = hx.window.getActiveTextEditor();
@@ -46,20 +69,20 @@ async function activate(context) {
 				// 获取选中代码块or整个文件
 				let selection = editor.selection;
 				let selectedText = editor.document.getText(selection);
-				
+
 				const entireFileContents = editor.document.getText();
 
-				const code = selectedText
-						? selectedText
-						: `This is the ${editor.document.languageId} file I'm working on: \n\n${entireFileContents}`;				
-				
+				const code = selectedText ?
+					selectedText :
+					`This is the ${editor.document.languageId} file I'm working on: \n\n${entireFileContents}`;
+
 				provider.sendOpenAIRequest(promptPrefix, code)
 			})
 
 		}
 	}
-	
-	async function openSetting(){
+
+	async function openSetting() {
 		let res = await showSettingDialog(provider)
 		// console.log(res)
 		// provider.updateConfig()

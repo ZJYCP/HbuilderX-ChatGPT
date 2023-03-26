@@ -1,7 +1,7 @@
 let hx = require('hbuilderx');
 
 /**
- * @description 插件设置界面
+ * @description 插件设置界面 （弃用）
  * @param {Object} config
  */
 function getUIData(config) {

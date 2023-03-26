@@ -40,17 +40,39 @@
 			},
 			{
 				"command": "chatgpt.refactor",
-				"title": "ChatGPT: 代码重构"
+				"title": "ChatGPT: 代码重构/优化"
 			},
 			{
 				"command": "chatgpt.addTest",
 				"title": "ChatGPT: 生成测试代码"
-			},
-			{
-				"command": "chatgpt.setting",
-				"title": "ChatGPT: 插件设置"
 			}
 		],
+		"configuration":{
+			"title":"HBuilderX-ChatGPT代码助手配置",
+			"properties":{
+				"chatgpt.selectedType":{
+					"type":"string",
+					"default":"accessToken",
+					"description":"API类型",
+					"enum":["accessToken","ApiKey"]
+				},
+				"chatgpt.ApiKey":{
+					"type":"string",
+					"default":"",
+					"description":"openAI-ApiKey(付费、容易被封)"
+				},
+				"chatgpt.accessToken":{
+					"type":"string",
+					"default":"",
+					"description":"chatGPT-accessToken(推荐)"
+				},
+				"chatgpt.proxy":{
+					"type":"string",
+					"default":"",
+					"description":"网络代理，支持http/https"
+				}
+			}
+		},
 		"menus": {
 			"editor/context": [
 				{
@@ -72,10 +94,6 @@
 					"command": "chatgpt.addTest",
 					"group": "z_commands",
 					"when": "editorTextFocus"
-				},
-				{
-					"command": "chatgpt.setting",
-					"group": "z_commands"
 				},
 				{
 					"group": "z_commands"
