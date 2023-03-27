@@ -3,7 +3,7 @@
 	"name": "HBuilderX-ChatGPT代码助手",
 	"description": "HBuilderX-ChatGPT代码助手",
 	"displayName": "HBuilderX-ChatGPT代码助手",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"publisher": "Glyn",
 	"engines": {
 		"HBuilderX": "^2.7.0"
@@ -53,7 +53,7 @@
 				"chatgpt.usePublic":{
 					"type":"boolean",
 					"default": true,
-					"description":"使用公共API(基于AccessToken,优先使用，会覆盖自定义的Token)"
+					"description":"使用公共API(优先使用，会覆盖自定义的Token)"
 				},
 				"chatgpt.selectedType":{
 					"type":"string",

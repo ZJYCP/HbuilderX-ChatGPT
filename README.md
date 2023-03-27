@@ -30,7 +30,7 @@
 1. 在**IDE设置的插件配置**中设置相关API，默认使用公共API，开箱即用，不用填写其他信息
 2. 如果使用自己的AccessToken：关闭公共API，API类型选择`accessToken`，填写AccessToken
 3. 如果使用自己的api-key：关闭公共Api，Api类型选择Api-key，填写AccessToken。
-   1. 如果API接口地址使用官方的（https:api.openai.com/v1)，则可能需要填写网络代理（视网络情况）；
+   1. 如果API接口地址使用官方的（https://api.openai.com/v1)，则可能需要填写网络代理（视网络情况）；
    2. 使用代理API接口地址，就不必用自己的代理，推荐一个（https://api.googlevideo.dev/v1)
 
 ![image-20230327160729910](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230327160729910.png)
