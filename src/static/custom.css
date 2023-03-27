@@ -39,6 +39,7 @@ body{
 	font-size: 0.8rem;
 	color: #2b3d43;	
 }
+
 .bottom{
 	display: flex;
 	position: absolute;
@@ -84,3 +85,20 @@ body{
 	flex: 1;
 	height: 100%;
 }
+
+code {
+    /*实现代码块左右滑动*/
+/* 	display: block;
+    white-space: pre !important;
+    overflow-x: auto !important;
+    word-break: keep-all !important;
+    word-wrap: initial !important; */
+}
+
+.hljs {
+    /* display: block; */
+    /* overflow-x: auto; */
+    /* padding: 0.5em; */
+    /* white-space: pre; */
+}
+
