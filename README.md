@@ -4,7 +4,7 @@
 
 ## feature
 
-- 使用最新的ChatGPT模型对代码进行优化
+- 使用最新的ChatGPT模型对代码进行解释、优化、找bug
 - 提供公共API服务
 - 可以自定义Api-key或AccessToken进行访问
 
