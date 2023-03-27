@@ -31,11 +31,11 @@ function Html(projectData) {
 						<div class="response-block hljs" ref="hlDiv" v-html="v[1]"></div>
 				</div>
 				<div class="bottom">
+					<button @click='handleClearClick' class="clearall">clear</button>
 					<div class="input">
 					  <input type="text" v-model='inputQuestion' @keyup.enter='()=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
 						<button @click='()=>{submitHandle(inputQuestion)}' class="submit" ><i class="iconfont icon-submit"></i></button>
 					</div>
-					<button @click='handleClearClick' class="clearall">清除所有</button>
 				</div>		
 			</div>
             <script src="${mainFile}"></script>

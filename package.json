@@ -3,7 +3,7 @@
 	"name": "HBuilderX-ChatGPT代码助手",
 	"description": "HBuilderX-ChatGPT代码助手",
 	"displayName": "HBuilderX-ChatGPT代码助手",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"publisher": "Glyn",
 	"engines": {
 		"HBuilderX": "^2.7.0"

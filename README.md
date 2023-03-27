@@ -1,6 +1,6 @@
 # HBuilderX ChatGPT代码助手
 
-![image-20230325233146483](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230325233146483.png)
+![image-20230327224854050](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230327224854050.png)
 
 ## feature
 
@@ -8,7 +8,7 @@
 - 提供公共API服务
 - 可以自定义Api-key或AccessToken进行访问
 
-![image-20230325232822997](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230325232822997.png)
+![image-20230327224954200](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230327224954200.png)
 
 ## 开始
 ### 获取accessToken或ApiKey
@@ -50,8 +50,7 @@
 
 ## TODO
 - 多模型选择
-- webview界面优化
-- 自定义对话输入
+- webview界面优化  
 - ......
 
 ## 声明
