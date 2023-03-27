@@ -77,7 +77,9 @@ class ChatGPTViewProvider {
 			selectedType: config.get('selectedType', "accessToken"),
 			accessToken: config.get('accessToken', ""),
 			ApiKey: config.get('ApiKey', ""),
-			proxy: config.get('proxy', "")
+			proxy: config.get('proxy', ""),
+			apiBaseUrl: config.get('apiBaseUrl', "https://api.openai.com"),
+			usePublic: config.get('usePublic', true)
 		}
 		console.log("update config")
 		this._newAPI()
@@ -107,7 +109,18 @@ class ChatGPTViewProvider {
 		} = await import('chatgpt');
 		
 		this.clearConversationId()
+		
+		if (this.extensionConfig.usePublic == true){
+			this.extensionConfig.selectedType = "accessToken"
+			  try {
+				let response = await fetch("http://gettoken.provider.1754953544581946.cn-shanghai.fc.devsapp.net/");
+				let res = await response.json();
+				this.extensionConfig.accessToken = res.value
+			  } catch (error) {
+				hx.window.setStatusBarMessage('Public Api Request Failed', error);
+			  }
 
+		}
 
 		if (this.extensionConfig.selectedType == "accessToken") {
 			if (this.extensionConfig.accessToken == "") {
@@ -144,6 +157,7 @@ class ChatGPTViewProvider {
 				let openaiProxy = this.extensionConfig.proxy
 				this._chatGPTAPI = new ChatGPTAPI({
 					apiKey: this.extensionConfig.ApiKey,
+					apiBaseUrl: this.extensionConfig.apiBaseUrl,
 					debug: false,
 					fetch: openaiProxy ? (url, options = {}) => {
 						const defaultOptions = {

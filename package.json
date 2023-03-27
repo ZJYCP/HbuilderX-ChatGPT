@@ -50,10 +50,15 @@
 		"configuration":{
 			"title":"HBuilderX-ChatGPT代码助手配置",
 			"properties":{
+				"chatgpt.usePublic":{
+					"type":"boolean",
+					"default": true,
+					"description":"使用公共API(基于AccessToken,优先使用，会覆盖自定义的Token)"
+				},
 				"chatgpt.selectedType":{
 					"type":"string",
 					"default":"accessToken",
-					"description":"API类型",
+					"description":"调用API类型",
 					"enum":["accessToken","ApiKey"]
 				},
 				"chatgpt.ApiKey":{
@@ -70,6 +75,11 @@
 					"type":"string",
 					"default":"",
 					"description":"网络代理，支持http/https"
+				},
+				"chatgpt.apiBaseUrl":{
+					"type":"string",
+					"default":"https://api.openai.com/v1",
+					"description":"API接口地址"
 				}
 			}
 		},

@@ -69,7 +69,7 @@ function Html(projectData) {
 									default:
 										hbuilderx.postMessage({
 											command: 'callback',
-											data: this.list
+											data: msg
 										});
 										break;
 										

@@ -29,7 +29,8 @@ async function activate(context) {
 		if (event.affectsConfiguration("chatgpt.selectedType") || 
 			event.affectsConfiguration("chatgpt.accessToken") || 
 			event.affectsConfiguration("chatgpt.ApiKey") || 
-			event.affectsConfiguration("chatgpt.proxy")
+			event.affectsConfiguration("chatgpt.proxy") ||
+			event.affectsConfiguration("chatgpt.apiBaseUrl")
 			) {
 			provider.updateConfig()
 		};
