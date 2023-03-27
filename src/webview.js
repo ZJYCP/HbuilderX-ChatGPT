@@ -26,7 +26,6 @@ class ChatGPTViewProvider {
 		let ThemeColorData = getHBuilderXThemeData();
 		console.log(ThemeColorData)
 		webView.html = Html(ThemeColorData)
-
 		// 处理来自webview的数据
 		webView.onDidReceiveMessage((msg) => {
 			console.log(msg)
@@ -44,13 +43,19 @@ class ChatGPTViewProvider {
 					break
 				}
 				case 'addQuestion': {
-					// this.sendOpenAIRequest(msg.data)
+					this.sendOpenAIRequest(msg.data)
 					console.log(msg.data)
 					break;
 				}
 				case 'clearConv': {
 					//TODO,maybe use that
 					this.clearConversationId()
+					break;
+				}
+				case 'interrupt': {
+					//TODO,maybe use that
+					console.log(msg.data)
+					break;
 				}
 			}
 		});
@@ -200,7 +205,11 @@ class ChatGPTViewProvider {
 					value: partialResponse.text,
 					id: this.parentMessageId || '0'
 				});
-			}
+			},
+			// 传入终止请求的函数
+			// abortSignal:(controller)=>{
+			// 	// 怎么在这里监听键盘事件？
+			// }
 		}).then((e) => {
 			console.log(e)
 			this.parentMessageId = e.id

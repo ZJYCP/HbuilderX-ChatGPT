@@ -2,23 +2,34 @@ const path = require('path');
 
 const vueFile = path.join(path.resolve(__dirname), 'static', 'vue.min.js');
 const customCssFile = path.join(path.resolve(__dirname), 'static', 'custom.css');
+const iconfontCssFile = path.join(path.resolve(__dirname), 'static', 'iconfont','iconfont.css');
 
 
 function Html(projectData) {
 	return `
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="en" @keydown='handleInterrupt'>
         <head>
             <meta charset="UTF-8">
             <link rel="stylesheet" href="${customCssFile}">
+			<link rel="stylesheet" href="${iconfontCssFile}">
             <script src="${vueFile}"></script>
         </head>
         <body>
 			<div id="app" v-cloak class="app">
-				<div v-for='(v,k,i) in list' :key='k' class="conversition" v-focus>
-					<div class="question-block"><strong>You：</strong> <i>{{v[0]}}</i></div>
-					<div class="response-block"><strong>ChatGPT:</strong> {{v[1]}}</div>
+				<div class="content">
+					<div v-for='(v,k,i) in list' :key='k' class="conversition" v-focus>
+						<div class="question-block"><strong>You：</strong> <i>{{v[0]}}</i></div>
+						<div class="response-block"><strong>ChatGPT:</strong> {{v[1]}}</div>
+					</div>
 				</div>
+				<div class="bottom">
+					<div class="input">
+					  <input type="text" v-model='inputQuestion' @keyup.enter='()=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
+						<button @click='()=>{submitHandle(inputQuestion)}' class="submit" ><i class="iconfont icon-submit"></i></button>
+					</div>
+					<button @click='handleClearClick' class="clearall">清除所有</button>
+				</div>		
 			</div>
             <script>
                 Vue.directive('focus', {
@@ -30,6 +41,7 @@ function Html(projectData) {
                     el: '#app',
                     data: {
 						list: {},
+						inputQuestion:'',
                     },
                     computed: {
 
@@ -79,9 +91,17 @@ function Html(projectData) {
 						
 						//webview的问题提交
 						submitHandle(question){
+							this.inputQuestion=''
 							hbuilderx.postMessage({
 							    command: 'addQuestion',
 								data: question
+							});
+						},
+						handleClearClick(){
+							this.list={};
+							hbuilderx.postMessage({
+							    command: 'clearConv',
+								data: 0
 							});
 						}
 

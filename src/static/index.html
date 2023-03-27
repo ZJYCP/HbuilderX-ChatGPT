@@ -1,15 +1,25 @@
-<html>
+<html ref='box' >
 	<head>
 		<title>webview 样式编辑测试</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js">
 		</script>
 		<link rel="stylesheet" href="./custom.css">
+		<link rel="stylesheet" href="../static/iconfont/iconfont.css">
 	</head>
 	<body>
 		<div id="app" v-cloak class="app">
-			<div v-for='(v,k,i) in list' :key='k' class="conversition">
-				<div class="question-block"><strong>You：</strong> <i>{{v[0]}}</i></div>
-				<div class="response-block"><strong>ChatGPT:</strong> {{v[1]}}</div>
+			<div class="content">
+				<div v-for='(v,k,i) in list' :key='k' class="conversition">
+					<div class="question-block"><strong>You：</strong> <i>{{v[0]}}</i></div>
+					<div class="response-block"><strong>ChatGPT:</strong> {{v[1]}}</div>
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="input">
+				  <input type="text" v-model='inputQuestion' @keyup.enter='()=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
+				<button @click='()=>{submitHandle(inputQuestion)}' class="submit" ><i class="iconfont icon-submit"></i></button>
+				</div>
+				<button class="clearall">清除所有</button>
 			</div>
 		</div>
 
@@ -18,13 +28,25 @@
 				el: '#app',
 				data: {
 					list: {
-						'0': ['question',
+						'0': ['question语义',
 							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
 						],
 						'1': ['question',
 							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
+						],
+						'2': ['question',
+							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
+						],
+						'3': ['question',
+							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
+						],
+						'4': ['question',
+							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
 						]
 					},
+					inputQuestion:"",
+					question:'iuknbn'
+					// list:{}
 				},
 				computed: {
 
@@ -38,7 +60,7 @@
 					//     window.addEventListener('hbuilderxReady', () => {
 					//         this.eventListener();
 					//     })
-					// });			
+					// });		
 				},
 				methods: {
 
@@ -48,10 +70,15 @@
 
 					//webview的问题提交
 					submitHandle(question) {
-						hbuilderx.postMessage({
-							command: 'addQuestion',
-							data: question
-						});
+						// hbuilderx.postMessage({
+						// 	command: 'addQuestion',
+						// 	data: question
+						// });
+						this.question=question
+						this.inputQuestion=''
+					},
+					handleClearClick(){
+						this.list=[]
 					}
 
 				}
