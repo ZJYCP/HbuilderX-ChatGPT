@@ -9,18 +9,22 @@
 	<body>
 		<div id="app" v-cloak class="app">
 			<div class="content">
-				<div v-for='(v,k,i) in list' :key='k' class="conversition">
+				<div v-for='(v,k,i) in list' :key='k' class="conversition" :id=i>
 					<div class="question-block"><strong>You：</strong> <i>{{v[0]}}</i></div>
 					<div class="response-block"><strong>ChatGPT:</strong> {{v[1]}}</div>
 				</div>
+				<span v-show='errorPrompt' class="error">
+					<i class="iconfont icon-error-fill"></i>
+					<span>{{errorInfor}}</span>  
+				</span>
 			</div>
 			<div class="bottom">
+				<button @click='handleClearClick' class="clearall">clear</button>
 				<div class="input">
-				  <input type="text" v-model='inputQuestion' @keyup.enter='()=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
-				<button @click='()=>{submitHandle(inputQuestion)}' class="submit" ><i class="iconfont icon-submit"></i></button>
+				  <input type="text" v-model='inputQuestion' @keyup.enter='(e)=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
+					<button @click='()=>{submitHandle(inputQuestion)}' class="submit" ><i class="iconfont icon-submit"></i></button>
 				</div>
-				<button class="clearall">清除所有</button>
-			</div>
+			</div>	
 		</div>
 
 		<script type="text/javascript">
@@ -28,24 +32,20 @@
 				el: '#app',
 				data: {
 					list: {
-						'0': ['question语义',
+						'0': ['0--question语义',
 							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
 						],
-						'1': ['question',
+						'1': ['1--question',
 							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
 						],
-						'2': ['question',
+						'2': ['2--question',
 							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
 						],
-						'3': ['question',
-							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
-						],
-						'4': ['question',
-							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
-						]
 					},
 					inputQuestion:"",
-					question:'iuknbn'
+					question:'iuknbn',
+					errorPrompt:false,
+					errorInfor:""
 					// list:{}
 				},
 				computed: {
@@ -55,14 +55,51 @@
 
 				},
 				mounted() {
+					// 注册监听
+					this.$nextTick(() => {
+					    window.addEventListener('hbuilderxReady', () => {
+					        this.eventListener();
+					    })
+					});	
+				},
+				updated(){
 					//注册监听
 					// this.$nextTick(() => {
 					//     window.addEventListener('hbuilderxReady', () => {
 					//         this.eventListener();
 					//     })
-					// });		
+					// });
+					// const content = document.getElementById('2')
+					// const pos = content.getBoundingClientRect()
+					// content.scrollIntoView(false)
+					// console.log(pos)
+					// 监听conversiton里的数据有没有变化？
+					// const content = document.querySelector('.conversition')
+					// console.log(this.list)
+					// const lastKey = Object.keys(this.list).pop()
+					// console.log(lastKey)
+					// lastQuestion()
 				},
-				methods: {
+				// computed:{
+				// 	lastQuestion(){
+				// 		const lastKey = Object.keys(this.list).pop()
+				// 		console.log(lastKey)
+				// 		return this.list[lastKey][1]
+				// 	}
+				// },
+				// watch:{
+				// 	// 监听list里是否有新元素就好了！
+				// 	lastQuestion(cur,prev){
+				// 			console.log('new',current)
+				// 			console.log('old',prev)
+				// 	}
+				// 	// question(current,prev){
+				// 	// 	console.log('new',current)
+				// 	// 	console.log('old',prev)
+				// 	// }
+					
+				// },
+				methods: {   
 
 					eventListener() {
 
@@ -74,8 +111,25 @@
 						// 	command: 'addQuestion',
 						// 	data: question
 						// });
+						if(question===''){
+							this.errorInfor='输入不能为空 !'
+							this.errorPrompt=true
+							setTimeout(()=>{
+								this.errorPrompt=false
+							},2000)
+							return
+						}
 						this.question=question
 						this.inputQuestion=''
+						this.list[question]=[question,'在实际开发中，如果一进入组件，就希望调用methods中的函数，发起ajax请求，此时可以在created中，通过this.函数名（），自动调用指定的函数']
+						this.$nextTick(()=>{
+							const questionList = document.querySelectorAll('.conversition')
+							console.log(questionList)
+							const last = questionList[questionList.length-1]
+							const lastResponse = last.querySelector('.response-block')
+							console.log(lastResponse)
+							lastResponse.scrollIntoView()
+						})
 					},
 					handleClearClick(){
 						this.list=[]
