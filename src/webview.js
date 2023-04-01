@@ -121,6 +121,7 @@ class ChatGPTViewProvider {
 				let response = await fetch("http://gettoken.provider.1754953544581946.cn-shanghai.fc.devsapp.net/");
 				let res = await response.json();
 				this.extensionConfig.accessToken = res.value
+				this.extensionConfig.apiReverseProxyUrl = res.apiReverseProxyUrl || 'https://api.pawan.krd/backend-api/conversation'
 			  } catch (error) {
 				hx.window.setStatusBarMessage('Public Api Request Failed', error);
 			  }
@@ -142,8 +143,7 @@ class ChatGPTViewProvider {
 					accessToken: this.extensionConfig.accessToken,
 					debug: false,
 					model: "gpt-3.5-turbo",
-
-					// apiReverseProxyUrl: 'https://api.pawan.krd/backend-api/conversation'
+					apiReverseProxyUrl: this.extensionConfig.apiReverseProxyUrl || 'https://api.pawan.krd/backend-api/conversation'
 				})
 			}
 		} else {

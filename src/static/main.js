@@ -1,6 +1,6 @@
 (function() {
 	Vue.directive('focus', {
-		inserted: function(el) {
+		update: function(el) {
 			el.focus()
 		}
 	});

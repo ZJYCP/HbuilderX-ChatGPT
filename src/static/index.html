@@ -16,7 +16,7 @@
 			</div>
 			<div class="bottom">
 				<div class="input">
-				  <input type="text" v-model='inputQuestion' @keyup.enter='()=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
+				  <input type="text" v-model='inputQuestion' @keypress.enter='()=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
 				<button @click='()=>{submitHandle(inputQuestion)}' class="submit" ><i class="iconfont icon-submit"></i></button>
 				</div>
 				<button class="clearall">清除所有</button>
