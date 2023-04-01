@@ -19,7 +19,24 @@ body{
 	height: 100%;
 	overflow-y: scroll;
 	box-sizing: border-box;
+	position: relative;
 }
+.content .error{
+		font-size: 1rem;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		padding: 0.6rem;
+		background-color: lightgray;
+		color: red;
+		text-align: center;
+		border-radius: 0.2rem;
+	}
+.icon-error-fill{
+	vertical-align: middle;
+	font-size: 1.8rem !important;
+	}
 .conversition{
 	margin-bottom: 1.2rem;
 	font-family: monospace;

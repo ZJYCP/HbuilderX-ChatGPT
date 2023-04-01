@@ -197,7 +197,7 @@ class ChatGPTViewProvider {
 		this._chatGPTAPI.sendMessage(question, {
 			conversationId: this.conversationId,
 			parentMessageId: this.parentMessageId,
-			timeoutMs: 1 * 60 * 1000,
+			timeoutMs: 2 * 60 * 1000,
 			onProgress: (partialResponse) => {
 				// console.log(partialResponse)
 				this.sendMessageToWebView({

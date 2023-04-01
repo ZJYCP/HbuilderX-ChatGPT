@@ -9,6 +9,8 @@
 		data: {
 			list: {},
 			inputQuestion: '',
+			errorPrompt: false,
+			errorInfor: ""
 		},
 		computed: {
 
@@ -49,13 +51,27 @@
 				hbuilderx.onDidReceiveMessage((msg) => {
 					switch (msg.type) {
 						case "addQuestion": {
-							this.$set(this.list, msg.id, [msg.value, "thinking..."])
+							this.$set(this.list, msg.id, [msg.value, "thinking..."]);
+							this.$nextTick(() => {
+								const questionList = document.querySelectorAll(
+									'.conversition')
+								const last = questionList[questionList.length - 1]
+								const lastResponse = last.querySelector('.question-block')
+								lastResponse.scrollIntoView(false)
+							})
 							break;
 						}
 						case "addResponse": {
 							this.$set(this.list, msg.id, [this.list[msg.id][0],
 								this.prehandle(msg.value)
 							])
+							this.$nextTick(() => {
+								const questionList = document.querySelectorAll(
+									'.conversition')
+								const last = questionList[questionList.length - 1]
+								const lastResponse = last.querySelector('.response-block')
+								lastResponse.scrollIntoView(false)
+							})
 							break;
 						}
 						default:
@@ -78,7 +94,16 @@
 			//webview的问题提交
 			//webview的问题提交
 			submitHandle(question) {
+				// 判断question是否为空字符串，如果是通过变量控制提示框的出现，提示错误，并返回
 				this.inputQuestion = ''
+				if (question === '') {
+					this.errorInfor = '输入不能为空 !'
+					this.errorPrompt = true
+					setTimeout(() => {
+						this.errorPrompt = false
+					}, 2000)
+					return
+				}
 				hbuilderx.postMessage({
 					command: 'addQuestion',
 					data: question

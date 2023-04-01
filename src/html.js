@@ -13,7 +13,7 @@ const mainFile = path.join(path.resolve(__dirname), 'static', 'main.js');
 function Html(projectData) {
 	return `
     <!DOCTYPE html>
-    <html lang="en" @keydown='handleInterrupt'>
+    <html lang="en">
         <head>
             <meta charset="UTF-8">
             <link rel="stylesheet" href="${customCssFile}">
@@ -29,11 +29,16 @@ function Html(projectData) {
 					<div v-for='(v,k,i) in list' :key='k' class="conversition" v-focus>
 						<div class="question-block"><strong>You：</strong> <i>{{v[0]}}</i></div>
 						<div class="response-block hljs" ref="hlDiv" v-html="v[1]"></div>
+					</div>
+					<span v-show='errorPrompt' class="error">
+						<i class="iconfont icon-error-fill"></i>
+						<span>{{errorInfor}}</span>  
+					</span>
 				</div>
 				<div class="bottom">
 					<button @click='handleClearClick' class="clearall">clear</button>
 					<div class="input">
-					  <input type="text" v-model='inputQuestion' @keyup.enter='()=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
+					  <input type="text" v-model='inputQuestion' @keypress.enter='(e)=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
 						<button @click='()=>{submitHandle(inputQuestion)}' class="submit" ><i class="iconfont icon-submit"></i></button>
 					</div>
 				</div>		
