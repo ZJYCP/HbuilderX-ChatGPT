@@ -1,11 +1,11 @@
 # HBuilderX ChatGPT代码助手
 
-![image-20230327224854050](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230327224854050.png)
+![Snipaste_2023-04-15_00-00-30](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/Snipaste_2023-04-15_00-00-30.jpg)
 
 ## feature
 
 - 使用最新的ChatGPT模型对代码进行解释、优化、找bug
-- 提供公共API服务
+- **提供公共API服务**
 - 可以自定义Api-key或AccessToken进行访问
 
 ![image-20230327224954200](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230327224954200.png)
@@ -16,7 +16,7 @@
 **使用本插件的公共api可忽略这里**
 
 1. AccessToken可以在登入Chatgpt网页([New chat (openai.com)](https://chat.openai.com/chat))后打开`https://chat.openai.com/api/auth/session`,会以json的形式返回本次的AccessToken，有效期大概一个月。
-2. ApiKey直接在OpenAI的管理平台开通（[Account API Keys - OpenAI API](https://platform.openai.com/account/api-keys)
+2. ApiKey直接在OpenAI的管理平台开通（[Account API Keys - OpenAI API](https://platform.openai.com/account/api-keys)）
 3. 关于两者的区别
 
 ​		**还是建议使用AccessToken**
@@ -29,7 +29,7 @@
 
 1. 在**IDE设置的插件配置**中设置相关API，默认使用公共API，开箱即用，不用填写其他信息
 2. 如果使用自己的AccessToken：关闭公共API，API类型选择`accessToken`，填写AccessToken
-3. 如果使用自己的api-key：关闭公共Api，Api类型选择Api-key，填写apikey。
+3. 如果使用自己的api-key：关闭公共Api，Api类型选择`Api-key`，填写apikey。
    1. 如果API接口地址使用官方的（https://api.openai.com/v1)，则可能需要填写网络代理（视网络情况）；
    2. 使用代理API接口地址，就不必用自己的代理，推荐一个（https://api.googlevideo.dev/v1)
 
@@ -58,3 +58,6 @@
 1. 作者不能保证这个扩展会一直正常工作，没有任何问题或不良影响。请自行决定是否使用，风险自负。
 2. 此插件不会使用/存储您的个人身份信息。
 3. 作者不对您使用此插件所遇到的任何问题承担责任。您使用OpenAI服务需要遵守OpenAI的隐私政策和使用条款。
+4. **有使用问题，建议意见，进群联系我吧，评论区看的不及时**
+
+<img src="https://blog-1252832257.cos.ap-shanghai.myqcloud.com/WechatIMG79.jpeg" alt="WechatIMG79" style="zoom:50%;" />

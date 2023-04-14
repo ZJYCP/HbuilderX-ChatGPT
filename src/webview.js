@@ -139,6 +139,7 @@ class ChatGPTViewProvider {
 					}
 				});
 			} else {
+				console.log(this.extensionConfig.apiReverseProxyUrl)
 				this._chatGPTAPI = new ChatGPTUnofficialProxyAPI({
 					accessToken: this.extensionConfig.accessToken,
 					debug: false,

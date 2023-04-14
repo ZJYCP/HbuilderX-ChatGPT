@@ -1,30 +1,42 @@
-<html ref='box' >
+<html ref='box'>
 	<head>
 		<title>webview 样式编辑测试</title>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js">
-		</script>
 		<link rel="stylesheet" href="./custom.css">
 		<link rel="stylesheet" href="../static/iconfont/iconfont.css">
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="../static/vendor/element.css">
+		<!-- 引入组件库 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+		<script src="../static/vendor/element.js"></script>
 	</head>
 	<body>
 		<div id="app" v-cloak class="app">
-			<div class="content">
+			<div class="content scroll-container">
 				<div v-for='(v,k,i) in list' :key='k' class="conversition" :id=i>
 					<div class="question-block"><strong>You：</strong> <i>{{v[0]}}</i></div>
 					<div class="response-block"><strong>ChatGPT:</strong> {{v[1]}}</div>
 				</div>
-				<span v-show='errorPrompt' class="error">
+<!-- 				<span v-show='errorPrompt' class="error">
 					<i class="iconfont icon-error-fill"></i>
-					<span>{{errorInfor}}</span>  
-				</span>
+					<span>{{errorInfor}}</span>
+				</span> -->
 			</div>
-			<div class="bottom">
+
+			<div style="display: flex;">
+				<el-button size="small" icon="el-icon-refresh" circle @click='handleClearClick'></el-button>
+
+				<el-input size="small" v-model='inputQuestion' @change='()=>{submitHandle(inputQuestion)}'
+					placeholder='请输入问题'></el-input>
+				<el-button size="small" icon="el-icon-s-promotion" circle
+					@click='()=>{submitHandle(inputQuestion)}'></el-button>
+			</div>
+			<!-- 			<div class="bottom">
 				<button @click='handleClearClick' class="clearall">clear</button>
 				<div class="input">
 				  <input type="text" v-model='inputQuestion' @keypress.enter='()=>{submitHandle(inputQuestion)}' placeholder='请输入问题' />
 				<button @click='()=>{submitHandle(inputQuestion)}' class="submit" ><i class="iconfont icon-submit"></i></button>
 				</div>
-			</div>	
+			</div>	 -->
 		</div>
 
 		<script type="text/javascript">
@@ -33,7 +45,7 @@
 				data: {
 					list: {
 						'0': ['0--question语义',
-							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
+							'这段代码创建了一个新的变量"_chatGPTAPI"，这个变量是通过调用一个叫做"ChatGPTUnofficialProxyAPI"的构造函数创建的。这个构造函数接收一些参数，包括"accessToken"、"debug"、"model"和"apiReverseProxyUrl"。其中，"accessToken"是用来验证访问权限的，"debug"是用来设置调试模式，"model"是指定使用哪个GPT模型来生成回复，"apiReverseProxyUrl"是一个可选参数，用于指定API反向代理的URL地址。这段代码中，"accessToken"的值是从"this.extensionConfig.accessToken"获取的，"debug"的值为false，"model"的值为"gpt-3.5-turbo"，"apiReverseProxyUrl"的值是从"this.extensionConfig.apiReverseProxyUrl"获取的，如果没有指定则使用默认URL。'
 						],
 						'1': ['1--question',
 							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
@@ -42,10 +54,10 @@
 							"这段代码没有错误，它定义了一个名为 VERSION 的变量，并将其值设置为字符串 'latest'。这是一种常见的方式，用于设置默认值或者版本号。通常情况下"
 						],
 					},
-					inputQuestion:"",
-					question:'iuknbn',
-					errorPrompt:false,
-					errorInfor:""
+					inputQuestion: "",
+					question: 'iuknbn',
+					errorPrompt: false,
+					errorInfor: ""
 					// list:{}
 				},
 				computed: {
@@ -57,12 +69,12 @@
 				mounted() {
 					// 注册监听
 					this.$nextTick(() => {
-					    window.addEventListener('hbuilderxReady', () => {
-					        this.eventListener();
-					    })
-					});	
+						window.addEventListener('hbuilderxReady', () => {
+							this.eventListener();
+						})
+					});
 				},
-				updated(){
+				updated() {
 					//注册监听
 					// this.$nextTick(() => {
 					//     window.addEventListener('hbuilderxReady', () => {
@@ -97,9 +109,9 @@
 				// 	// 	console.log('new',current)
 				// 	// 	console.log('old',prev)
 				// 	// }
-					
+
 				// },
-				methods: {   
+				methods: {
 
 					eventListener() {
 
@@ -111,28 +123,31 @@
 						// 	command: 'addQuestion',
 						// 	data: question
 						// });
-						if(question===''){
-							this.errorInfor='输入不能为空 !'
-							this.errorPrompt=true
-							setTimeout(()=>{
-								this.errorPrompt=false
-							},2000)
+						if (question === '') {
+							// this.errorInfor = '输入不能为空 !'
+							// this.errorPrompt = true
+							// setTimeout(() => {
+							// 	this.errorPrompt = false
+							// }, 2000)
+							this.$message.error({message:'输入不能为空!',center:true});
 							return
 						}
-						this.question=question
-						this.inputQuestion=''
-						this.list[question]=[question,'在实际开发中，如果一进入组件，就希望调用methods中的函数，发起ajax请求，此时可以在created中，通过this.函数名（），自动调用指定的函数']
-						this.$nextTick(()=>{
+						this.question = question
+						this.inputQuestion = ''
+						this.list[question] = [question,
+							'在实际开发中，如果一进入组件，就希望调用methods中的函数，发起ajax请求，此时可以在created中，通过this.函数名（），自动调用指定的函数'
+						]
+						this.$nextTick(() => {
 							const questionList = document.querySelectorAll('.conversition')
 							console.log(questionList)
-							const last = questionList[questionList.length-1]
+							const last = questionList[questionList.length - 1]
 							const lastResponse = last.querySelector('.response-block')
 							console.log(lastResponse)
 							lastResponse.scrollIntoView()
 						})
 					},
-					handleClearClick(){
-						this.list=[]
+					handleClearClick() {
+						this.list = {}
 					}
 
 				}
