@@ -1,51 +1,49 @@
-const path = require("path")
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const webViewConfig = {
+  mode: 'production',
 
-    mode: "none",
+  entry: {
+    app: './src/webview/index.tsx',
+  },
 
-    entry: {
-        app: "./src/webview/index.tsx",
-    },
+  output: {
+    path: path.resolve(__dirname, 'dist/webview'),
+    filename: 'bundle.js',
+    clean: true,
+  },
 
-    output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "[name].js",
-    },
+  resolve: {
+    extensions: ['.ts', '.js', '.tsx', '.jsx'],
+  },
 
-    resolve: {
-        extensions: [".ts", ".js", ".tsx", ".jsx", ".json"]
-    },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'ts-loader',
+          },
+        ],
+      },
+    ],
+  },
 
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: "ts-loader",
-                    }
-                ]
-            }
-        ]
-    },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/webview/index.html', // 指定 HTML 模板
+      filename: 'index.html',
+    }),
+  ],
 
-    devtool: 'source-map',
+  // devtool: 'source-map',
 
-    externals: {
-        hbuilderx: 'commonjs hbuilderx',
-    },
-}
+  externals: {
+    hbuilderx: 'commonjs hbuilderx',
+  },
+};
 
-const extensionConfig = {
-    ...webViewConfig,
-    target: "node",
-    entry: {
-        extension: "./src/extension.ts"
-    },
-}
-
-
-
-module.exports = [webViewConfig, extensionConfig]
+module.exports = [webViewConfig];

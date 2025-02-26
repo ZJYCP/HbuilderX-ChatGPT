@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 export default function App() {
-  return (
-    <div>App</div>
-  )
+  console.log('App version:', React.version);
+
+  return <div>App</div>;
 }
