@@ -5,7 +5,6 @@
   "displayName": "HBuilderX-ChatGPT代码助手",
   "version": "0.1.5",
   "publisher": "Glyn",
-  "type": "module",
   "engines": {
     "HBuilderX": "^3.8.5"
   },
@@ -119,38 +118,38 @@
     "plugin-manager"
   ],
   "scripts": {
-    "hbuilder:prepublish": "npm run package",
-    "compile": "webpack",
     "build": "tsc && webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "dev": "webpack serve --mode development",
+    "lint": "eslint src --ext ts"
   },
   "dependencies": {
-    "chatgpt": "^5.1.2",
-    "https-proxy-agent": "^5.0.1",
-    "isomorphic-fetch": "^3.0.0",
-    "node-fetch": "^2.6.9",
+    "@tailwindcss/postcss": "^4.0.9",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router": "^7.2.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.25.0",
+    "autoprefixer": "^10.4.20",
+    "css-loader": "^7.1.2",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "html-webpack-plugin": "^5.6.3",
+    "postcss": "^8.5.3",
+    "postcss-loader": "^8.1.1",
     "prettier": "^3.5.2",
+    "sass": "^1.85.1",
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^4.0.9",
     "ts-loader": "^9.5.2",
     "typescript": "^5.7.3",
     "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
   }
 }
