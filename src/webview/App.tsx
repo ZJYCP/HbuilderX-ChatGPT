@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router';
+import { HashRouter, Routes, Route } from 'react-router';
 
 const Login = React.lazy(() => import('./pages/login'));
 const Logout = React.lazy(() => import('./pages/logout'));
 const Home = React.lazy(() => import('./pages/home'));
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Suspense>
         <Routes>
           <Route path="/login" element={<Login />}></Route>
@@ -14,6 +14,6 @@ export default function App() {
           <Route path="/" element={<Home />}></Route>
         </Routes>
       </Suspense>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
