@@ -20,7 +20,7 @@ export class ArtiCodeViewProvider {
     <html lang="zh">
     <head>
       <meta charset="UTF-8">
-      <title>AI 对话</title>
+      <title>ArtiCode</title>
     </head>
     <body>
       <div id="root"></div>

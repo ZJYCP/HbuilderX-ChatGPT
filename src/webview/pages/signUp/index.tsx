@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function LogoutPage() {
+export default function SignUpPage() {
   return <div>LogoutPage</div>;
 }
