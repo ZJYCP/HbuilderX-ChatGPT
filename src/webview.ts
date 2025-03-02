@@ -21,10 +21,11 @@ export class ArtiCodeViewProvider {
     <head>
       <meta charset="UTF-8">
       <title>ArtiCode</title>
+      <script defer="defer" src="${scriptPath}"></script>
     </head>
     <body>
       <div id="root"></div>
-      <script src="${scriptPath}"></script>
+
     </body>
     </html>
   `;
