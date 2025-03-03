@@ -118,7 +118,7 @@
     "plugin-manager"
   ],
   "scripts": {
-    "build": "tsc && webpack",
+    "build": "tsc -p tsconfig.build.json && webpack",
     "dev": "webpack serve --mode development",
     "lint": "eslint src --ext ts"
   },
