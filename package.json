@@ -119,6 +119,8 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && webpack",
+    "build:ext": "tsc -p tsconfig.build.json",
+    "build:web": "webpack",
     "dev": "webpack serve --mode development",
     "lint": "eslint src --ext ts"
   },
