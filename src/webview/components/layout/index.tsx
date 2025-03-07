@@ -7,9 +7,14 @@ interface LayoutProps {
 export default function Layout(props: LayoutProps) {
   const { children } = props;
   return (
-    <div className="mx-1 pb-2  h-screen flex flex-col overflow-hidden">
+    <div className="bg-gray-900 h-screen flex flex-col overflow-hidden">
       <HeaderCom></HeaderCom>
-      <main className="flex-1">{children}</main>
+      <main
+        className="flex-1 flex flex-col"
+        style={{ maxHeight: 'calc(100% - 2rem)' }}
+      >
+        {children}
+      </main>
     </div>
   );
 }

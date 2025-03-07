@@ -1,19 +1,23 @@
-import { Bubble } from '@ant-design/x';
+import { useChat } from '@ai-sdk/react';
+import { HOST } from '../../utils';
 import SenderCom from '../../components/sender';
+import BubbleList from '../../components/bubbleList';
 
-const messages = [
-  {
-    content: 'Hello, Ant Design X!',
-    role: 'user',
-  },
-];
 export default function HomePage() {
+  const { messages, input, handleInputChange, handleSubmit, status, stop } =
+    useChat({
+      api: `${HOST}/llm/chat`,
+    });
+
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-auto">
-        <Bubble.List items={messages} />
-      </div>
-      <SenderCom />
-    </div>
+    <>
+      <BubbleList messages={messages} status={status}></BubbleList>
+      <SenderCom
+        content={input}
+        status={status}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+      ></SenderCom>
+    </>
   );
 }

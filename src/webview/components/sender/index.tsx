@@ -1,46 +1,69 @@
-import { Sender, Suggestion } from '@ant-design/x';
-import React from 'react';
-import type { GetProp } from 'antd';
+import React, { useMemo } from 'react';
+import { Textarea } from '@heroui/react';
+import { SendHorizontal } from 'lucide-react';
+import { useMemoizedFn } from 'ahooks';
+import cx from 'classnames';
 
-type SuggestionItems = Exclude<GetProp<typeof Suggestion, 'items'>, () => void>;
+interface SenderComProps {
+  content: string;
+  status: 'ready' | 'submitted' | 'streaming' | 'error';
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: () => void;
+}
+export default function SenderCom(props: SenderComProps) {
+  const { status, content, handleInputChange, handleSubmit } = props;
 
-const suggestions: SuggestionItems = [
-  { label: 'Write a report', value: 'report' },
-  { label: 'Draw a picture', value: 'draw' },
-  {
-    label: 'Check some knowledge',
-    value: 'knowledge',
-    extra: 'Extra Info',
-  },
-];
-export default function SenderCom() {
-  const [value, setValue] = React.useState('');
+  const submitForbidden = useMemo(() => {
+    return status === 'submitted' || status === 'streaming';
+  }, [status]);
 
+  const doSubmit = useMemoizedFn(() => {
+    if (!submitForbidden) {
+      handleSubmit();
+    }
+  });
+  const handelKeyDown = useMemoizedFn(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        if (e.shiftKey) {
+          return;
+        } else {
+          e.preventDefault();
+          doSubmit();
+        }
+      }
+    },
+  );
   return (
-    <Suggestion
-      items={suggestions}
-      onSelect={(itemVal) => {
-        setValue(`[${itemVal}]:`);
-      }}
-      block
-    >
-      {({ onTrigger, onKeyDown }) => {
-        return (
-          <Sender
-            value={value}
-            onChange={(nextVal) => {
-              if (nextVal === '/') {
-                onTrigger();
-              } else if (!nextVal) {
-                onTrigger(false);
-              }
-              setValue(nextVal);
-            }}
-            onKeyDown={onKeyDown}
-            placeholder="输入 / 获取建议"
+    <div className="border-gray-300 bg-gray-100 rounded-md m-2">
+      <div>
+        <Textarea
+          value={content}
+          onChange={handleInputChange}
+          onKeyDown={handelKeyDown}
+          minRows={1}
+          maxRows={12}
+          variant="bordered"
+          classNames={{
+            inputWrapper: 'border-none',
+          }}
+          label={<div>label</div>}
+          placeholder="输入问题"
+        />
+      </div>
+      <div className="flex justify-between my-2 mx-2 text-xs">
+        <span>qwen模型</span>
+        <div className="flex gap-4">
+          <span>Shift↩︎换行/↩︎发送</span>
+          <SendHorizontal
+            className={cx(
+              'size-4',
+              submitForbidden ? 'cursor-not-allowed' : 'cursor-pointer',
+            )}
+            onClick={doSubmit}
           />
-        );
-      }}
-    </Suggestion>
+        </div>
+      </div>
+    </div>
   );
 }

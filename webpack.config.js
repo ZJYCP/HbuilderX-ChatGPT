@@ -69,8 +69,17 @@ const webViewConfig = {
     static: {
       directory: path.join(__dirname, 'dist/webview'),
     },
+    // 配置proxy
+    // proxy: {
+    //   '/api': {
+    //     target:
+    //       'http://backend.fcv3.1754953544581946.cn-hangzhou.fc.devsapp.net',
+    //     changeOrigin: true,
+    //     pathRewrite: { '^/api': '' },
+    //   },
+    // },
     compress: true, // 启用 gzip 压缩
-    port: 3000, // 端口号
+    port: 3001, // 端口号
     open: false, // 自动打开浏览器
     hot: true, // 启用热更新
     historyApiFallback: true, // 支持 React Router 的 HTML5 History API
