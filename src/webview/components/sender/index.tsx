@@ -53,7 +53,7 @@ export default function SenderCom(props: SenderComProps) {
       </div>
       <div className="flex justify-between my-2 mx-2 text-xs">
         <span>qwen模型</span>
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           <span>Shift↩︎换行/↩︎发送</span>
           <SendHorizontal
             className={cx(

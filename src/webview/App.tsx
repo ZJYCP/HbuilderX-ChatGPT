@@ -11,8 +11,8 @@ export default function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Layout>
           <Routes>
-            <Route path="/signIn" element={<SignIn />}></Route>
-            <Route path="/signUp" element={<SignUp />}></Route>
+            <Route path="/signin" element={<SignIn />}></Route>
+            <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/" element={<Home />}></Route>
           </Routes>
         </Layout>

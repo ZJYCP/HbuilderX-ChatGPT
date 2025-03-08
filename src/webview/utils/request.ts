@@ -1,9 +1,17 @@
+import { HOST } from '../../utils';
+
 // 定义请求配置接口
 interface RequestConfig {
   url: string;
   method?: string;
   headers?: HeadersInit;
-  body?: BodyInit;
+  data?: object;
+}
+
+export interface ResponseFromBackend<T> {
+  message: string;
+  data: T;
+  statusCode: number;
 }
 
 // 请求拦截器，可用于添加统一的请求头
@@ -23,28 +31,37 @@ const requestInterceptor = (config: RequestConfig): RequestConfig => {
 const responseInterceptor = async (response: Response): Promise<Response> => {
   if (!response.ok) {
     // 示例：处理响应错误
-    throw new Error(`请求失败，状态码: ${response.status}`);
+    console.error('响应错误:', response.statusText);
   }
   return response;
 };
 
 // 封装的 fetch 方法
-const fetchWrapper = async (config: RequestConfig) => {
+const request = async <T = any>(
+  config: RequestConfig,
+): Promise<ResponseFromBackend<T>> => {
   // 执行请求拦截器
   const interceptedConfig = requestInterceptor(config);
 
   try {
     // 发起请求
-    const response = await fetch(interceptedConfig.url, {
+    const response = await fetch(`${HOST}${interceptedConfig.url}`, {
       method: interceptedConfig.method || 'GET',
       headers: interceptedConfig.headers,
-      body: interceptedConfig.body,
+      body: JSON.stringify(interceptedConfig.data),
     });
 
     // 执行响应拦截器
     const interceptedResponse = await responseInterceptor(response);
 
-    return interceptedResponse;
+    const res = await interceptedResponse.json();
+
+    if (res.statusCode === 401) {
+      // 处理未登录状态
+      console.error('未登录');
+    }
+
+    return res;
   } catch (error) {
     // 处理请求错误
     console.error('请求发生错误:', error);
@@ -52,4 +69,4 @@ const fetchWrapper = async (config: RequestConfig) => {
   }
 };
 
-export default fetchWrapper;
+export default request;

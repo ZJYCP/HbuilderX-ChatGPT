@@ -1,7 +1,7 @@
 import { useChat } from '@ai-sdk/react';
-import { HOST } from '../../utils';
 import SenderCom from '../../components/sender';
 import BubbleList from '../../components/bubbleList';
+import { HOST } from '../../../utils';
 
 export default function HomePage() {
   const { messages, input, handleInputChange, handleSubmit, status, stop } =
