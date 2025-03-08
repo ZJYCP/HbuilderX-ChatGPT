@@ -1,21 +1,20 @@
+import { HOST } from '../utils';
+
 const hx = require('hbuilderx');
 
 const fetchCode = async (language, fileName, prev, after) => {
-  const res = await fetch(
-    'http://backend.fcv3.1754953544581946.cn-hangzhou.fc.devsapp.net/llm/codeComplete',
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        language,
-        fileName,
-        prev,
-        after,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+  const res = await fetch(`${HOST}/llm/codeComplete`, {
+    method: 'POST',
+    body: JSON.stringify({
+      language,
+      fileName,
+      prev,
+      after,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
     },
-  );
+  });
   const code = res.text();
   return code;
 };

@@ -7,6 +7,9 @@ export default function HomePage() {
   const { messages, input, handleInputChange, handleSubmit, status, stop } =
     useChat({
       api: `${HOST}/llm/chat`,
+      onError: (err) => {
+        console.log('error', err);
+      },
     });
 
   return (

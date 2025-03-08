@@ -10,6 +10,12 @@ const webViewConfig = {
 
   output: {
     path: path.resolve(__dirname, 'dist/webview'),
+    // filename: (pathData) => {
+    //   if (pathData.chunk.name === 'app') {
+    //     return 'bundle.js'; // 固定主入口的文件名
+    //   }
+    //   return '[name].[contenthash].js'; // 其他文件继续使用hash
+    // },
     filename: 'bundle.js',
     clean: true,
   },
@@ -21,12 +27,51 @@ const webViewConfig = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: [
           {
-            loader: 'ts-loader',
+            loader: 'thread-loader',
+            options: {
+              workers: 4, // 使用4个CPU核心打包
+            },
           },
+          {
+            loader: 'swc-loader',
+            options: {
+              jsc: {
+                parser: {
+                  syntax: 'typescript',
+                  tsx: true,
+                },
+                transform: {
+                  react: {
+                    runtime: 'automatic',
+                  },
+                },
+              },
+            },
+          },
+          // {
+          //   loader: 'babel-loader',
+          //   options: {
+          //     presets: [
+          //       [
+          //         '@babel/preset-env',
+          //         {
+          //           targets: '> 0.5%, last 2 versions, Chrome 90',
+          //         },
+          //       ],
+          //       [
+          //         '@babel/preset-react',
+          //         {
+          //           runtime: 'automatic', // ✅ 自动引入 React，避免 React is not defined
+          //         },
+          //       ],
+          //       '@babel/preset-typescript',
+          //     ],
+          //   },
+          // },
         ],
       },
       {
@@ -64,20 +109,28 @@ const webViewConfig = {
     }),
   ],
 
+  cache: {
+    type: 'filesystem', // 启用文件缓存
+    cacheDirectory: path.resolve(__dirname, '.webpack_cache'),
+  },
+
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       vendor: {
+  //         test: /[\\/]node_modules[\\/]/,
+  //         name: 'vendor',
+  //         chunks: 'all',
+  //       },
+  //     },
+  //   },
+  // },
+
   // 配置devserve
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist/webview'),
     },
-    // 配置proxy
-    // proxy: {
-    //   '/api': {
-    //     target:
-    //       'http://backend.fcv3.1754953544581946.cn-hangzhou.fc.devsapp.net',
-    //     changeOrigin: true,
-    //     pathRewrite: { '^/api': '' },
-    //   },
-    // },
     compress: true, // 启用 gzip 压缩
     port: 3001, // 端口号
     open: false, // 自动打开浏览器
