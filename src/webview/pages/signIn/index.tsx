@@ -15,7 +15,6 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    // 这里可以调用您的request工具进行登录请求
     console.log('登录中...', { email, password });
     const res = await request({
       url: '/auth/login',
@@ -27,7 +26,7 @@ export default function SignIn() {
     });
     console.log(res);
 
-    const token = res.data.token;
+    const token = res.data.access_token;
     sendHandler({
       type: ExtMessageType.SIGNIN,
       data: {
@@ -35,6 +34,7 @@ export default function SignIn() {
       },
     });
     userState.setToken(token);
+    localStorage.setItem('token', token);
     navigate('/');
   };
 

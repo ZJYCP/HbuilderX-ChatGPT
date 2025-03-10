@@ -20,6 +20,7 @@ const requestInterceptor = (config: RequestConfig): RequestConfig => {
   const headers = {
     ...config.headers,
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
   };
   return {
     ...config,

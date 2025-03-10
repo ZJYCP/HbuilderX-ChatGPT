@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 export interface SystemInfo {
   // 主题
@@ -10,13 +11,23 @@ interface ISystemStore {
   setSystemInfo: (systemInfo: SystemInfo) => void;
 }
 
-const useSystemStore = create<ISystemStore>((set) => ({
-  systemInfo: {
-    theme: 'light',
-  },
-  updateSystemInfo: (systemInfo) =>
-    set((state) => ({ systemInfo: { ...state.systemInfo, ...systemInfo } })),
-  setSystemInfo: (systemInfo) => set(() => ({ systemInfo })),
-}));
+const useSystemStore = create<ISystemStore>()(
+  persist(
+    (set) => ({
+      systemInfo: {
+        theme: 'light',
+      },
+      updateSystemInfo: (systemInfo) =>
+        set((state) => ({
+          systemInfo: { ...state.systemInfo, ...systemInfo },
+        })),
+      setSystemInfo: (systemInfo) => set(() => ({ systemInfo })),
+    }),
+    {
+      name: 'system-storage',
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+);
 
 export default useSystemStore;
