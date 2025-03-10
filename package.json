@@ -1,123 +1,181 @@
 {
-	"id": "HBuilderX-ChatGPT",
-	"name": "HBuilderX-ChatGPT代码助手",
-	"description": "HBuilderX-ChatGPT代码助手",
-	"displayName": "HBuilderX-ChatGPT代码助手",
-	"version": "0.1.5",
-	"publisher": "Glyn",
-	"engines": {
-		"HBuilderX": "^2.7.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"main": "./extension",
-	"contributes": {
-		"viewsContainers": {
-			"rightside": [
-				{
-					"id": "chatgpt",
-					"title": "chatgpt代码助手"
-				}
-			]
-		},
-		"views": {
-			"chatgpt": [
-				{
-					"id": "chatgpt.webview",
-					"title": "chatgpt-代码助手"
-				}
-			]
-		},
-		"commands": [
-			{
-				"command": "chatgpt.explain",
-				"title": "ChatGPT: 代码解释"
-			},
-			{
-				"command": "chatgpt.findProblems",
-				"title": "ChatGPT: 代码找错"
-			},
-			{
-				"command": "chatgpt.refactor",
-				"title": "ChatGPT: 代码重构/优化"
-			},
-			{
-				"command": "chatgpt.addTest",
-				"title": "ChatGPT: 生成测试代码"
-			}
-		],
-		"configuration":{
-			"title":"HBuilderX-ChatGPT代码助手配置",
-			"properties":{
-				"chatgpt.usePublic":{
-					"type":"boolean",
-					"default": true,
-					"description":"使用公共API(优先使用，会覆盖自定义的Token)"
-				},
-				"chatgpt.selectedType":{
-					"type":"string",
-					"default":"accessToken",
-					"description":"调用API类型",
-					"enum":["accessToken","ApiKey"]
-				},
-				"chatgpt.ApiKey":{
-					"type":"string",
-					"default":"",
-					"description":"openAI-ApiKey(付费、容易被封)"
-				},
-				"chatgpt.accessToken":{
-					"type":"string",
-					"default":"",
-					"description":"chatGPT-accessToken(推荐)"
-				},
-				"chatgpt.proxy":{
-					"type":"string",
-					"default":"",
-					"description":"网络代理，支持http/https"
-				},
-				"chatgpt.apiBaseUrl":{
-					"type":"string",
-					"default":"https://api.openai.com/v1",
-					"description":"API接口地址"
-				}
-			}
-		},
-		"menus": {
-			"editor/context": [
-				{
-					"command": "chatgpt.explain",
-					"group": "z_commands",
-					"when": "editorTextFocus"
-				},
-				{
-					"command": "chatgpt.findProblems",
-					"group": "z_commands",
-					"when": "editorTextFocus"
-				},
-				{
-					"command": "chatgpt.refactor",
-					"group": "z_commands",
-					"when": "editorTextFocus"
-				},
-				{
-					"command": "chatgpt.addTest",
-					"group": "z_commands",
-					"when": "editorTextFocus"
-				},
-				{
-					"group": "z_commands"
-				}
-			]
-		}
-	},
-	"extensionDependencies": [
-		"plugin-manager"
-	],
-	"dependencies": {
-		"chatgpt": "^5.1.2",
-		"https-proxy-agent": "^5.0.1",
-		"isomorphic-fetch": "^3.0.0",
-		"node-fetch": "^2.6.9"
-	}
+  "id": "HBuilderX-ChatGPT",
+  "name": "HBuilderX-ChatGPT代码助手",
+  "description": "HBuilderX-ChatGPT代码助手",
+  "displayName": "HBuilderX-ChatGPT代码助手",
+  "version": "0.1.5",
+  "publisher": "Glyn",
+  "engines": {
+    "HBuilderX": "^3.8.5"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension",
+  "contributes": {
+    "viewsContainers": {
+      "rightside": [
+        {
+          "id": "chatgpt",
+          "title": "chatgpt代码助手"
+        }
+      ]
+    },
+    "views": {
+      "chatgpt": [
+        {
+          "id": "chatgpt.webview",
+          "title": "chatgpt-代码助手"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "chatgpt.explain",
+        "title": "ChatGPT: 代码解释"
+      },
+      {
+        "command": "chatgpt.findProblems",
+        "title": "ChatGPT: 代码找错"
+      },
+      {
+        "command": "chatgpt.refactor",
+        "title": "ChatGPT: 代码重构/优化"
+      },
+      {
+        "command": "chatgpt.addTest",
+        "title": "ChatGPT: 生成测试代码"
+      }
+    ],
+    "configuration": {
+      "title": "HBuilderX-ChatGPT代码助手配置",
+      "properties": {
+        "chatgpt.usePublic": {
+          "type": "boolean",
+          "default": true,
+          "description": "使用公共API(优先使用，会覆盖自定义的Token)"
+        },
+        "chatgpt.selectedType": {
+          "type": "string",
+          "default": "accessToken",
+          "description": "调用API类型",
+          "enum": [
+            "accessToken",
+            "ApiKey"
+          ]
+        },
+        "chatgpt.ApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "openAI-ApiKey(付费、容易被封)"
+        },
+        "chatgpt.accessToken": {
+          "type": "string",
+          "default": "",
+          "description": "chatGPT-accessToken(推荐)"
+        },
+        "chatgpt.proxy": {
+          "type": "string",
+          "default": "",
+          "description": "网络代理，支持http/https"
+        },
+        "chatgpt.apiBaseUrl": {
+          "type": "string",
+          "default": "https://api.openai.com/v1",
+          "description": "API接口地址"
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "chatgpt.explain",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "chatgpt.findProblems",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "chatgpt.refactor",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "chatgpt.addTest",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "group": "z_commands"
+        }
+      ]
+    }
+  },
+  "extensionDependencies": [
+    "plugin-manager"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && webpack",
+    "build:ext": "tsc -p tsconfig.build.json",
+    "build:web": "webpack",
+    "dev": "webpack serve --mode development",
+    "lint": "eslint src --ext ts"
+  },
+  "dependencies": {
+    "@ai-sdk/react": "^1.1.21",
+    "@emotion/is-prop-valid": "^1.3.1",
+    "@emotion/react": "^11.14.0",
+    "@heroui/react": "^2.7.4",
+    "ahooks": "^3.8.4",
+    "ai": "^4.1.54",
+    "classnames": "^2.5.1",
+    "core-js": "^3.41.0",
+    "framer-motion": "^12.4.10",
+    "lowdb": "^7.0.1",
+    "lucide-react": "^0.477.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.0.1",
+    "react-router": "^7.2.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "regenerator-runtime": "^0.14.1",
+    "remark-gfm": "^4.0.1",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
+    "@swc/core": "^1.11.8",
+    "@types/node": "^22.13.8",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "autoprefixer": "^10.4.20",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-prettier": "^5.2.3",
+    "html-webpack-plugin": "^5.6.3",
+    "postcss": "^8.5.3",
+    "postcss-loader": "^8.1.1",
+    "prettier": "^3.5.2",
+    "sass": "^1.85.1",
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0",
+    "swc-loader": "^0.2.6",
+    "tailwindcss": "3",
+    "thread-loader": "^4.0.4",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.7.3",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  }
 }

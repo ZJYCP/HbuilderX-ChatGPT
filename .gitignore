@@ -1,1 +1,4 @@
 node_modules
+dist
+.webpack_cache
+.env
