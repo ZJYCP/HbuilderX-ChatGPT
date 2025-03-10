@@ -1,5 +1,4 @@
-import { IExtMessage } from '../utils/extType';
-import db from './db';
+import db from '../db';
 
 export interface ExtMessageHandler {
   handler(message: any): void;

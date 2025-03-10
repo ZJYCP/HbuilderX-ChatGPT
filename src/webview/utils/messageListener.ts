@@ -1,6 +1,6 @@
+import { isDev } from '.';
 import { IWebviewMessage, WebviewMessageType } from '../../utils/extType';
 import { TokenHandler, WebviewMessageHandler } from './receiveStrategy';
-const hx = require('hbuilderx');
 
 class MessageListener {
   handlers: Map<WebviewMessageType, WebviewMessageHandler> = new Map();
@@ -21,14 +21,17 @@ class MessageListener {
   }
 
   start() {
-    hx.onDidReceiveMessage((msg: IWebviewMessage) => {
-      const handler = this.handlers.get(msg.type);
-      if (handler) {
-        handler.handler(msg.data);
-      } else {
-        console.warn('未找到对应的handler', msg.type);
-      }
-    });
+    if (!isDev) {
+      // @ts-ignore
+      hbuilderx.onDidReceiveMessage((msg: IWebviewMessage) => {
+        const handler = this.handlers.get(msg.type);
+        if (handler) {
+          handler.handler(msg.data);
+        } else {
+          console.warn('未找到对应的handler', msg.type);
+        }
+      });
+    }
   }
 }
 

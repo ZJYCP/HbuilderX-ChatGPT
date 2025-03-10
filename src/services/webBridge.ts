@@ -1,4 +1,4 @@
-import { ExtMessageType, IExtMessage } from '../utils/extType';
+import { ExtMessageType, IExtMessage, IWebviewMessage } from '../utils/extType';
 import {
   ExtMessageHandler,
   SignInHandler,
@@ -53,7 +53,7 @@ class WebBridge {
    * ext->webview 发送消息
    * @param message
    */
-  public postMessage(message: IExtMessage) {
+  public postMessage(message: IWebviewMessage) {
     this.webview.postMessage(message);
   }
 }

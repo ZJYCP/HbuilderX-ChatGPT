@@ -18,6 +18,8 @@ export enum WebviewMessageType {
   TOKEN,
   // 当前文件信息, 文件内容,文件名,选中行等
   FILE_INFO,
+  // 主题色
+  THEME,
 }
 export interface IWebviewMessage {
   type: WebviewMessageType;

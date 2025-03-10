@@ -39,8 +39,8 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
-      <Card className="w-full max-w-md p-8 shadow-lg rounded-lg">
+    <div className="flex items-center justify-center h-full  from-blue-50 to-purple-50">
+      <Card className="w-full max-w-md p-8 shadow-lg rounded-lg bg-primary-800">
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
           用户登录
         </h1>

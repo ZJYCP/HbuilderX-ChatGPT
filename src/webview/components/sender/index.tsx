@@ -35,7 +35,7 @@ export default function SenderCom(props: SenderComProps) {
     },
   );
   return (
-    <div className="border-gray-300 bg-gray-100 rounded-md m-2">
+    <div className="border-gray-300 bg-primary-400 rounded-md m-2">
       <div>
         <Textarea
           value={content}
