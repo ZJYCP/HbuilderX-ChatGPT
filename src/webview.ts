@@ -5,13 +5,12 @@ const path = require('path');
  */
 
 export class ArtiCodeViewProvider {
-  private webview: any;
+  public webview: any;
   constructor(webviewPanel: any) {
     // this._extensionUri = extensionUri
     this.resolveWebviewView(webviewPanel);
   }
 
-  // 设置webview内容，监听webview里发出的信息
   resolveWebviewView(webviewPanel: any) {
     this.webview = webviewPanel.webView;
     const scriptPath = path.join(__dirname, 'webview/bundle.js');

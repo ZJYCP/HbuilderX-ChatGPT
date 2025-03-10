@@ -2,10 +2,15 @@ import { Input, Button, Card, Spacer } from '@heroui/react';
 import { useState } from 'react';
 import request from '../../utils/request';
 import { useNavigate } from 'react-router';
+import useSendMessage from '../../hooks/useSendMessage';
+import { ExtMessageType } from '../../../utils/extType';
+import { useUserStore } from '../../store';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { sendHandler } = useSendMessage();
+  const userState = useUserStore();
 
   const navigate = useNavigate();
 
@@ -21,6 +26,16 @@ export default function SignIn() {
       },
     });
     console.log(res);
+
+    const token = res.data.token;
+    sendHandler({
+      type: ExtMessageType.SIGNIN,
+      data: {
+        token,
+      },
+    });
+    userState.setToken(token);
+    navigate('/');
   };
 
   return (

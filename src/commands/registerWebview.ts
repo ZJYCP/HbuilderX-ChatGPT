@@ -1,3 +1,4 @@
+import WebBridge from '../services/webBridge';
 import { ArtiCodeViewProvider } from '../webview';
 const hx = require('hbuilderx');
 
@@ -8,6 +9,9 @@ export function registerWebView(context) {
   });
 
   let provider = new ArtiCodeViewProvider(webviewPanel);
+
+  // 设置通信机制
+  WebBridge.getInstance(provider.webview);
 
   hx.window.showView({
     viewId: 'chatgpt.webview',
