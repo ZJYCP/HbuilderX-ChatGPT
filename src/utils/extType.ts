@@ -4,6 +4,10 @@ export enum ExtMessageType {
   SIGNIN,
   // 登出
   SIGNOUT,
+  // Insert,
+  INSERT,
+  // 新建文件
+  NEW_FILE,
 }
 
 // 扩展与webview的通信接口

@@ -1,6 +1,7 @@
 import { ExtMessageType, IExtMessage, IWebviewMessage } from '../utils/extType';
 import {
   ExtMessageHandler,
+  InsertHandler,
   SignInHandler,
   SignOutHandler,
 } from './receiveStrategy';
@@ -47,6 +48,8 @@ class WebBridge {
   private registerHandlers() {
     this.handlers.set(ExtMessageType.SIGNIN, new SignInHandler());
     this.handlers.set(ExtMessageType.SIGNOUT, new SignOutHandler());
+    this.handlers.set(ExtMessageType.INSERT, new InsertHandler());
+    this.handlers.set(ExtMessageType.NEW_FILE, new NewFileHandler());
   }
 
   /**

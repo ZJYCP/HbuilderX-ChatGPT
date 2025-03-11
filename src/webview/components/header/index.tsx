@@ -29,7 +29,7 @@ export default function HeaderCom() {
 
   return (
     <div className="h-8 flex justify-between items-center mx-1">
-      <span>ArtiCode</span>
+      <span className="font-bold">ArtiCode</span>
       {hasLogin ? (
         <div>{userState.userInfo?.email}</div>
       ) : (

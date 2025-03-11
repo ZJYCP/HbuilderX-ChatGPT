@@ -1,5 +1,5 @@
 import { HOST } from '../utils';
-
+import db from '../db';
 const hx = require('hbuilderx');
 
 const fetchCode = async (language, fileName, prev, after) => {
@@ -13,6 +13,7 @@ const fetchCode = async (language, fileName, prev, after) => {
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
+      Authorization: `Bearer ${db.data.token}`,
     },
   });
   const code = res.text();
@@ -25,7 +26,13 @@ const fetchCode = async (language, fileName, prev, after) => {
  */
 export function registerGenerateCodeCommand(context) {
   let cancelToken;
+  if (!db.data.token) {
+    hx.window.showInformationMessage('请先在打开Articode面板并登录');
+  }
   const inlineProvider = async (document, position, context, token) => {
+    if (!db.data.token) {
+      return;
+    }
     const language = document.languageId;
     const fileName = document.fileName;
     /**

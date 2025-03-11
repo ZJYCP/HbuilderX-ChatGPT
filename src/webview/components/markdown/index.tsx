@@ -10,6 +10,7 @@ import { useSystemStore } from '../../store';
 import styles from './index.module.scss';
 import cx from 'classnames';
 import { useMemo } from 'react';
+import { useMemoizedFn } from 'ahooks';
 export default function MarkdownCom(props: any) {
   const { systemInfo } = useSystemStore();
 
@@ -31,12 +32,16 @@ export default function MarkdownCom(props: any) {
       children={props.children}
       remarkPlugins={[remarkGfm]}
       components={{
-        pre: ({ children }) => (
-          <pre className={cx('bg-primary-700 rounded', styles.markdownWrapper)}>
-            <PreCom>{children}</PreCom>
-            {children}
-          </pre>
-        ),
+        pre: ({ children }) => {
+          return (
+            <pre
+              className={cx('bg-primary-700 rounded', styles.markdownWrapper)}
+            >
+              <PreCom>{children}</PreCom>
+              {children}
+            </pre>
+          );
+        },
         code(props) {
           const { children, className, node, ...rest } = props;
           const match = /language-(\w+)/.exec(className || '');
