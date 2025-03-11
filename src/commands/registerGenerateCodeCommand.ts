@@ -31,7 +31,7 @@ export function registerGenerateCodeCommand(context) {
   }
   const inlineProvider = async (document, position, context, token) => {
     if (!db.data.token) {
-      return;
+      return null;
     }
     const language = document.languageId;
     const fileName = document.fileName;

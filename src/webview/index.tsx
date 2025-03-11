@@ -13,7 +13,13 @@ import messageListener from './utils/messageListener';
 const container = document.getElementById('root');
 if (!container) throw new Error('Root container not found');
 
-messageListener.start();
+/**
+ * 过一会window上才有hbuilderx
+ */
+setTimeout(() => {
+  messageListener.start();
+}, 300);
+
 const root = createRoot(container);
 root.render(
   <React.StrictMode>

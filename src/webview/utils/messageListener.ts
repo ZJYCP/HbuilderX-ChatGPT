@@ -22,15 +22,19 @@ class MessageListener {
 
   start() {
     if (!isDev) {
-      // @ts-ignore
-      hbuilderx.onDidReceiveMessage((msg: IWebviewMessage) => {
-        const handler = this.handlers.get(msg.type);
-        if (handler) {
-          handler.handler(msg.data);
-        } else {
-          console.warn('未找到对应的handler', msg.type);
-        }
-      });
+      try {
+        // @ts-ignore
+        window.hbuilderx.onDidReceiveMessage((msg: IWebviewMessage) => {
+          const handler = this.handlers.get(msg.type);
+          if (handler) {
+            handler.handler(msg.data);
+          } else {
+            console.warn('未找到对应的handler', msg.type);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }

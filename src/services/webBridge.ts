@@ -4,6 +4,7 @@ import {
   InsertHandler,
   SignInHandler,
   SignOutHandler,
+  NewFileHandler,
 } from './receiveStrategy';
 
 class WebBridge {
