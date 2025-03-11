@@ -1,14 +1,70 @@
-/**
- * 本地数据库
- */
+import * as fs from 'fs';
+import * as path from 'path';
 import { GLOBAL_CONFIG_PATH } from './tools';
-const fs = require('fs');
 
-// 如果该文件不存在，则创建，包括上级文件夹
-if (!fs.existsSync(GLOBAL_CONFIG_PATH)) {
-  fs.mkdirSync(GLOBAL_CONFIG_PATH, { recursive: true });
+/**
+ * 简单的本地 JSON 数据存储工具
+ */
+class LocalDB<T> {
+  private filePath: string;
+  public data: T;
+
+  constructor(filePath: string, defaultData: T) {
+    this.filePath = filePath;
+    this.data = defaultData;
+
+    this.ensureFileExists();
+    this.read();
+  }
+
+  private ensureFileExists() {
+    const dir = path.dirname(this.filePath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    if (!fs.existsSync(this.filePath)) {
+      this.write(this.data);
+    }
+  }
+
+  read() {
+    try {
+      const content = fs.readFileSync(this.filePath, 'utf8');
+      if (content) {
+        this.data = JSON.parse(content);
+      }
+    } catch (err) {
+      console.error('读取文件失败，使用默认数据:', err.message);
+      this.write(this.data);
+    }
+  }
+
+  write(data: T) {
+    try {
+      fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2), 'utf8');
+      this.data = data;
+    } catch (err) {
+      console.error('写入文件失败:', err.message);
+    }
+  }
+
+  update(fn: (data: T) => void) {
+    fn(this.data);
+    this.write(this.data);
+  }
+
+  get(): T {
+    return this.data;
+  }
 }
 
-let db;
+function createLocalDB<T>(filePath: string, defaultData: T) {
+  return new LocalDB(filePath, defaultData);
+}
+
+const db = createLocalDB(GLOBAL_CONFIG_PATH + '/pref.json', {
+  user: {},
+  token: '',
+});
 
 export default db;
