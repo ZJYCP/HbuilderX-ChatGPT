@@ -10,6 +10,9 @@ import { useMemoizedFn } from 'ahooks';
 import cx from 'classnames';
 import CommandTip from './CommandTip';
 import { COMMAND_LIST } from '../../utils';
+import { useUserStore } from '../../store';
+import useSendMessage from '../../hooks/useSendMessage';
+import { ExtMessageType } from '../../../utils/extType';
 
 interface SenderComProps {
   content: string;
@@ -23,6 +26,8 @@ export default function SenderCom(props: SenderComProps) {
   const { status, content, handleInputChange, handleSubmit, setMessages } =
     props;
   const [isOpen, setIsOpen] = React.useState(false);
+  const { token, userInfo } = useUserStore();
+  const { sendHandler } = useSendMessage();
 
   const submitForbidden = useMemo(() => {
     return status === 'submitted' || status === 'streaming';
@@ -51,8 +56,15 @@ export default function SenderCom(props: SenderComProps) {
   );
 
   const doSubmit = useMemoizedFn(() => {
-    if (!submitForbidden) {
+    if (token && userInfo && !submitForbidden) {
       handleSubmit();
+    } else {
+      sendHandler({
+        type: ExtMessageType.SHOW_INFORMATION,
+        data: {
+          message: '请先登录',
+        },
+      });
     }
   });
   const handelKeyDown = useMemoizedFn(

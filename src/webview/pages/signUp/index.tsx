@@ -11,6 +11,8 @@ export default function SignUpPage() {
   const navigate = useNavigate();
   const { sendHandler } = useSendMessage();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
   const handleSignUp = async () => {
     setLoading(true);
     try {
@@ -29,6 +31,9 @@ export default function SignUpPage() {
       navigate('/signin');
       console.log('注册成功', res);
     } catch (error) {
+      setLoading(false);
+      setError('登录失败，请检查您的邮箱和密码是否正确');
+
       console.error('注册失败', error);
     }
   };
@@ -57,6 +62,7 @@ export default function SignUpPage() {
           onChange={(e) => setPassword(e.target.value)}
           className="mb-6"
         />
+        {!!error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
         <Button
           color="primary"

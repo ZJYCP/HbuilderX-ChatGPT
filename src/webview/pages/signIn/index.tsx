@@ -13,33 +13,39 @@ export default function SignIn() {
   const { sendHandler } = useSendMessage();
   const userState = useUserStore();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     setLoading(true);
     console.log('登录中...', { email, password });
-    const res = await request({
-      url: '/auth/login',
-      method: 'POST',
-      data: {
-        email,
-        password,
-      },
-    });
-    console.log(res);
-    setLoading(false);
+    try {
+      const res = await request({
+        url: '/auth/login',
+        method: 'POST',
+        data: {
+          email,
+          password,
+        },
+      });
+      console.log(res);
+      setLoading(false);
 
-    const token = res.data.access_token;
-    sendHandler({
-      type: ExtMessageType.SIGNIN,
-      data: {
-        token,
-      },
-    });
-    userState.setToken(token);
-    localStorage.setItem('token', token);
-    navigate('/');
+      const token = res.data.access_token;
+      sendHandler({
+        type: ExtMessageType.SIGNIN,
+        data: {
+          token,
+        },
+      });
+      userState.setToken(token);
+      localStorage.setItem('token', token);
+      navigate('/');
+    } catch (error) {
+      setLoading(false);
+      setError('登录失败，请检查您的邮箱和密码是否正确');
+    }
   };
 
   return (
@@ -66,6 +72,7 @@ export default function SignIn() {
           onChange={(e) => setPassword(e.target.value)}
           className="mb-6"
         />
+        {!!error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
         <Button
           color="primary"
