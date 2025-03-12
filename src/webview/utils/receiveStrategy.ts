@@ -10,8 +10,12 @@ export interface WebviewMessageHandler {
  */
 export class TokenHandler implements WebviewMessageHandler {
   handler(data: any) {
-    const { setToken } = useUserStore();
-    setToken(data);
+    try {
+      useUserStore.setState({ token: data });
+      localStorage.setItem('token', data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

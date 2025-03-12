@@ -1,13 +1,25 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router';
 import Layout from './components/layout';
 import { useSystemStore } from './store';
+import useSendMessage from './hooks/useSendMessage';
+import { ExtMessageType } from '../utils/extType';
 
 const SignIn = React.lazy(() => import('./pages/signIn'));
 const SignUp = React.lazy(() => import('./pages/signUp'));
 const Home = React.lazy(() => import('./pages/home'));
 export default function App() {
   const { systemInfo } = useSystemStore();
+  const { sendHandler } = useSendMessage();
+
+  useEffect(() => {
+    setTimeout(() => {
+      sendHandler({
+        type: ExtMessageType.OPENED,
+        data: {},
+      });
+    }, 400);
+  }, []);
 
   return (
     <HashRouter>

@@ -1,9 +1,22 @@
 import db from '../db';
+import { WebviewMessageType } from '../utils/extType';
+import WebBridge from './webBridge';
 const hx = require('hbuilderx');
 export interface ExtMessageHandler {
   handler(message: any): void | Promise<void>;
 }
 
+/**
+ * web打开
+ */
+export class OpenedHandler implements ExtMessageHandler {
+  handler(message: any) {
+    WebBridge.getInstance().postMessage({
+      type: WebviewMessageType.TOKEN,
+      data: db.get().token,
+    });
+  }
+}
 /**
  * 登陆
  */
@@ -11,7 +24,7 @@ export class SignInHandler implements ExtMessageHandler {
   handler(message: any) {
     console.log('SignInHandler', message);
     db.update((data) => {
-      data.token = message;
+      data.token = message.token;
     });
   }
 }

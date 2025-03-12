@@ -63,7 +63,7 @@ function createLocalDB<T>(filePath: string, defaultData: T) {
 }
 
 const db = createLocalDB(GLOBAL_CONFIG_PATH + '/pref.json', {
-  user: {},
+  userInfo: null,
   token: '',
 });
 

@@ -5,33 +5,34 @@ import { useMemoizedFn } from 'ahooks';
 import request from '../../utils/request';
 
 export default function HeaderCom() {
-  const userState = useUserStore();
+  const { token, userInfo, setUserInfo } = useUserStore();
   const navigate = useNavigate();
 
   const hasLogin = useMemo(() => {
-    return !!userState.token && userState.userInfo;
-  }, [userState]);
+    return !!token && userInfo;
+  }, [token, userInfo]);
 
   useEffect(() => {
     const fetchInfo = async () => {
-      if (!userState.userInfo) {
+      if (!userInfo && token) {
         const userInfo = (
           await request({
             url: '/users/userInfo',
             method: 'GET',
           })
         ).data;
-        userState.setUserInfo(userInfo);
+        setUserInfo(userInfo);
       }
     };
+    console.log('token change', token);
     fetchInfo();
-  }, [userState.token]);
+  }, [token]);
 
   return (
     <div className="h-8 flex justify-between items-center mx-1">
       <span className="font-bold">ArtiCode</span>
       {hasLogin ? (
-        <div>{userState.userInfo?.email}</div>
+        <div>{userInfo?.email}</div>
       ) : (
         <div className="flex gap-2">
           <span
