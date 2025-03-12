@@ -1,21 +1,54 @@
 import React, { useMemo } from 'react';
-import { Textarea } from '@heroui/react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Textarea,
+} from '@heroui/react';
 import { SendHorizontal } from 'lucide-react';
 import { useMemoizedFn } from 'ahooks';
 import cx from 'classnames';
+import CommandTip from './CommandTip';
+import { COMMAND_LIST } from '../../utils';
 
 interface SenderComProps {
   content: string;
   status: 'ready' | 'submitted' | 'streaming' | 'error';
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: () => void;
+  setMessages: (messages: any[]) => void;
 }
+
 export default function SenderCom(props: SenderComProps) {
-  const { status, content, handleInputChange, handleSubmit } = props;
+  const { status, content, handleInputChange, handleSubmit, setMessages } =
+    props;
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const submitForbidden = useMemo(() => {
     return status === 'submitted' || status === 'streaming';
   }, [status]);
+
+  const handleInput = useMemoizedFn(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const inputValue = e.target.value;
+
+      let matched = false;
+
+      for (let i = 0; i < COMMAND_LIST.length; i++) {
+        const keyword = COMMAND_LIST[i].command;
+        if (
+          inputValue &&
+          inputValue.length <= keyword.length &&
+          keyword.startsWith(inputValue)
+        ) {
+          matched = true;
+          break;
+        }
+      }
+      setIsOpen(matched);
+      handleInputChange(e);
+    },
+  );
 
   const doSubmit = useMemoizedFn(() => {
     if (!submitForbidden) {
@@ -34,36 +67,51 @@ export default function SenderCom(props: SenderComProps) {
       }
     },
   );
-  return (
-    <div className="border-gray-300 bg-primary-400 rounded-md m-2">
+
+  const renderInput = useMemoizedFn(() => {
+    return (
       <div>
         <Textarea
           value={content}
-          onChange={handleInputChange}
+          onChange={handleInput}
           onKeyDown={handelKeyDown}
           minRows={1}
           maxRows={12}
           variant="bordered"
           classNames={{
-            inputWrapper: 'border-none',
+            inputWrapper: 'border-none text-sm my-2',
           }}
-          label={<div>label</div>}
+          // label={<div>label</div>}
           placeholder="输入问题"
         />
-      </div>
-      <div className="flex justify-between my-2 mx-2 text-xs">
-        <span>qwen模型</span>
-        <div className="flex gap-2">
-          <span>Shift↩︎换行/↩︎发送</span>
-          <SendHorizontal
-            className={cx(
-              'size-4',
-              submitForbidden ? 'cursor-not-allowed' : 'cursor-pointer',
-            )}
-            onClick={doSubmit}
-          />
+
+        <div className="flex justify-between my-2 mx-2 text-xs">
+          <span>qwen模型</span>
+          <div className="flex gap-2">
+            <span>Shift↩︎换行/↩︎发送</span>
+            <SendHorizontal
+              className={cx(
+                'size-4',
+                submitForbidden ? 'cursor-not-allowed' : 'cursor-pointer',
+              )}
+              onClick={doSubmit}
+            />
+          </div>
         </div>
       </div>
+    );
+  });
+
+  const handleCommandClick = useMemoizedFn((command: string) => {
+    if (command === '/clear') {
+      setMessages([]);
+    }
+  });
+  return (
+    <div className="border-gray-300 bg-primary-400 rounded-md m-2 relative">
+      {/* 还需要完善,先不开放 */}
+      {/* {isOpen && <CommandTip onCommandClick={handleCommandClick}></CommandTip>} */}
+      {renderInput()}
     </div>
   );
 }

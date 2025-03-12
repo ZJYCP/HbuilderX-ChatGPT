@@ -6,7 +6,9 @@ class MessageListener {
   handlers: Map<WebviewMessageType, WebviewMessageHandler> = new Map();
 
   static instance: MessageListener | null;
-  constructor() {}
+  constructor() {
+    this.registerHandlers();
+  }
 
   public static getInstance() {
     if (MessageListener.instance === null) {
@@ -16,21 +18,26 @@ class MessageListener {
     return MessageListener.instance;
   }
 
-  public registerHandler() {
+  public registerHandlers() {
     this.handlers.set(WebviewMessageType.TOKEN, new TokenHandler());
   }
 
   start() {
     if (!isDev) {
-      // @ts-ignore
-      hbuilderx.onDidReceiveMessage((msg: IWebviewMessage) => {
-        const handler = this.handlers.get(msg.type);
-        if (handler) {
-          handler.handler(msg.data);
-        } else {
-          console.warn('未找到对应的handler', msg.type);
-        }
-      });
+      try {
+        // @ts-ignore
+        window.hbuilderx.onDidReceiveMessage((msg: IWebviewMessage) => {
+          console.log('webview: 接收到', msg);
+          const handler = this.handlers.get(msg.type);
+          if (handler) {
+            handler.handler(msg.data);
+          } else {
+            console.warn('未找到对应的handler', msg.type);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }

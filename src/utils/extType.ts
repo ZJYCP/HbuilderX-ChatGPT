@@ -1,9 +1,15 @@
 /** 来自webview的数据 */
 export enum ExtMessageType {
+  // webview 打开
+  OPENED,
   // 登录
   SIGNIN,
   // 登出
   SIGNOUT,
+  // Insert,
+  INSERT,
+  // 新建文件
+  NEW_FILE,
 }
 
 // 扩展与webview的通信接口

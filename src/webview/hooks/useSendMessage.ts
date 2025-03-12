@@ -13,7 +13,7 @@ const useSendMessage = (): IUseSendMessage => {
         console.log('向IDE发送数据', data);
       } else {
         // @ts-ignore
-        hbuilderx.postMessage(data);
+        window.hbuilderx.postMessage(data);
       }
     },
   };

@@ -1,8 +1,11 @@
 import { ExtMessageType, IExtMessage, IWebviewMessage } from '../utils/extType';
 import {
   ExtMessageHandler,
+  InsertHandler,
   SignInHandler,
   SignOutHandler,
+  NewFileHandler,
+  OpenedHandler,
 } from './receiveStrategy';
 
 class WebBridge {
@@ -35,7 +38,9 @@ class WebBridge {
    * 注册接收消息,webview->ext
    */
   private registerReceive() {
+    console.log(this.webview);
     this.webview.onDidReceiveMessage((data: IExtMessage) => {
+      console.log('IDE: 接收到', data);
       const handler = this.handlers.get(data.type);
       if (handler) {
         handler.handler(data.data);
@@ -45,8 +50,11 @@ class WebBridge {
     });
   }
   private registerHandlers() {
+    this.handlers.set(ExtMessageType.OPENED, new OpenedHandler());
     this.handlers.set(ExtMessageType.SIGNIN, new SignInHandler());
     this.handlers.set(ExtMessageType.SIGNOUT, new SignOutHandler());
+    this.handlers.set(ExtMessageType.INSERT, new InsertHandler());
+    this.handlers.set(ExtMessageType.NEW_FILE, new NewFileHandler());
   }
 
   /**
