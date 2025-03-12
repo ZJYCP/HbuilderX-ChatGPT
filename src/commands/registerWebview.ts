@@ -4,7 +4,7 @@ const hx = require('hbuilderx');
 
 export function registerWebView(context) {
   // 创建webview
-  let webviewPanel = hx.window.createWebView('chatgpt.webview', {
+  let webviewPanel = hx.window.createWebView('articode.webview', {
     enableScritps: true,
   });
 
@@ -14,6 +14,6 @@ export function registerWebView(context) {
   WebBridge.getInstance(provider.webview);
 
   hx.window.showView({
-    viewId: 'chatgpt.webview',
+    viewId: 'articode.webview',
   });
 }
