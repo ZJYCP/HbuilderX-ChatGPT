@@ -6,6 +6,7 @@ import { Tooltip } from '@heroui/react';
 import { useMemoizedFn, useThrottleEffect } from 'ahooks';
 import useSendMessage from '../../hooks/useSendMessage';
 import { ExtMessageType } from '../../../utils/extType';
+import { fallbackCopy } from '../../utils';
 
 interface PreComProps {
   children: any;
@@ -16,9 +17,20 @@ export default function PreCom(props: PreComProps) {
 
   const match = /language-(\w+)/.exec(children.props.className || '');
   const language = match ? match[1] : '';
-  const copyHandler = useMemoizedFn(() => {
-    navigator.clipboard.writeText(children.props.children);
-  });
+  const copyHandler = () => {
+    if (navigator.clipboard && document.hasFocus()) {
+      navigator.clipboard
+        .writeText(children.props.children)
+        .then(() => console.log('复制成功！'))
+        .catch((err) => {
+          console.error('复制失败:', err);
+          fallbackCopy(children.props.children);
+        });
+    } else {
+      // 回退方案
+      fallbackCopy(children.props.children);
+    }
+  };
   const insertHandler = useMemoizedFn(() => {
     sendHandler({
       type: ExtMessageType.INSERT,

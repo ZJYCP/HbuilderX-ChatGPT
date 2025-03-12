@@ -22,3 +22,17 @@ export const COMMAND_LIST = [
     group: 'ai',
   },
 ];
+
+export const fallbackCopy = (text) => {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    console.log('复制成功（回退方案）！');
+  } catch (err) {
+    console.error('回退方案失败:', err);
+  }
+  document.body.removeChild(textarea);
+};
