@@ -10,6 +10,9 @@ import { useMemoizedFn } from 'ahooks';
 import cx from 'classnames';
 import CommandTip from './CommandTip';
 import { COMMAND_LIST } from '../../utils';
+import { useUserStore } from '../../store';
+import useSendMessage from '../../hooks/useSendMessage';
+import { ExtMessageType } from '../../../utils/extType';
 
 interface SenderComProps {
   content: string;
@@ -23,6 +26,8 @@ export default function SenderCom(props: SenderComProps) {
   const { status, content, handleInputChange, handleSubmit, setMessages } =
     props;
   const [isOpen, setIsOpen] = React.useState(false);
+  const { token, userInfo } = useUserStore();
+  const { sendHandler } = useSendMessage();
 
   const submitForbidden = useMemo(() => {
     return status === 'submitted' || status === 'streaming';
@@ -51,8 +56,15 @@ export default function SenderCom(props: SenderComProps) {
   );
 
   const doSubmit = useMemoizedFn(() => {
-    if (!submitForbidden) {
+    if (token && userInfo && !submitForbidden) {
       handleSubmit();
+    } else {
+      sendHandler({
+        type: ExtMessageType.SHOW_INFORMATION,
+        data: {
+          message: '请先登录',
+        },
+      });
     }
   });
   const handelKeyDown = useMemoizedFn(
@@ -82,13 +94,14 @@ export default function SenderCom(props: SenderComProps) {
             inputWrapper: 'border-none text-sm my-2',
           }}
           // label={<div>label</div>}
-          placeholder="输入问题"
+          placeholder="输入问题， Shift+Enter换行/Enter发送"
         />
 
         <div className="flex justify-between my-2 mx-2 text-xs">
-          <span>qwen模型</span>
+          {/* TODO：模型选择 */}
+          <span></span>
           <div className="flex gap-2">
-            <span>Shift↩︎换行/↩︎发送</span>
+            <span></span>
             <SendHorizontal
               className={cx(
                 'size-4',

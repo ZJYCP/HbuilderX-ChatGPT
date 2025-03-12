@@ -1,9 +1,9 @@
 {
-  "id": "HBuilderX-ChatGPT",
-  "name": "HBuilderX-ChatGPT代码助手",
-  "description": "HBuilderX-ChatGPT代码助手",
-  "displayName": "HBuilderX-ChatGPT代码助手",
-  "version": "0.1.5",
+  "id": "HBuilderX-ArtiCode",
+  "name": "ArtiCode-智能编程助手",
+  "description": "ArtiCode, 是一款面向HbuilderX的基于大模型的智能编码辅助工具, 提供行级/函数级实时续写、自然语言生成代码、单元测试生成、代码注释生成、代码解释、研发智能问答、异常报错排查等能力，为开发者带来高效、流畅的编码体验",
+  "displayName": "ArtiCode-键指如飞, 精准高效, 你的AI编程盟友",
+  "version": "1.0.0",
   "publisher": "Glyn",
   "engines": {
     "HBuilderX": "^3.8.5"
@@ -16,100 +16,16 @@
     "viewsContainers": {
       "rightside": [
         {
-          "id": "chatgpt",
-          "title": "chatgpt代码助手"
+          "id": "articode",
+          "title": "ArtiCode-智能编程助手"
         }
       ]
     },
     "views": {
-      "chatgpt": [
+      "articode": [
         {
-          "id": "chatgpt.webview",
-          "title": "chatgpt-代码助手"
-        }
-      ]
-    },
-    "commands": [
-      {
-        "command": "chatgpt.explain",
-        "title": "ChatGPT: 代码解释"
-      },
-      {
-        "command": "chatgpt.findProblems",
-        "title": "ChatGPT: 代码找错"
-      },
-      {
-        "command": "chatgpt.refactor",
-        "title": "ChatGPT: 代码重构/优化"
-      },
-      {
-        "command": "chatgpt.addTest",
-        "title": "ChatGPT: 生成测试代码"
-      }
-    ],
-    "configuration": {
-      "title": "HBuilderX-ChatGPT代码助手配置",
-      "properties": {
-        "chatgpt.usePublic": {
-          "type": "boolean",
-          "default": true,
-          "description": "使用公共API(优先使用，会覆盖自定义的Token)"
-        },
-        "chatgpt.selectedType": {
-          "type": "string",
-          "default": "accessToken",
-          "description": "调用API类型",
-          "enum": [
-            "accessToken",
-            "ApiKey"
-          ]
-        },
-        "chatgpt.ApiKey": {
-          "type": "string",
-          "default": "",
-          "description": "openAI-ApiKey(付费、容易被封)"
-        },
-        "chatgpt.accessToken": {
-          "type": "string",
-          "default": "",
-          "description": "chatGPT-accessToken(推荐)"
-        },
-        "chatgpt.proxy": {
-          "type": "string",
-          "default": "",
-          "description": "网络代理，支持http/https"
-        },
-        "chatgpt.apiBaseUrl": {
-          "type": "string",
-          "default": "https://api.openai.com/v1",
-          "description": "API接口地址"
-        }
-      }
-    },
-    "menus": {
-      "editor/context": [
-        {
-          "command": "chatgpt.explain",
-          "group": "z_commands",
-          "when": "editorTextFocus"
-        },
-        {
-          "command": "chatgpt.findProblems",
-          "group": "z_commands",
-          "when": "editorTextFocus"
-        },
-        {
-          "command": "chatgpt.refactor",
-          "group": "z_commands",
-          "when": "editorTextFocus"
-        },
-        {
-          "command": "chatgpt.addTest",
-          "group": "z_commands",
-          "when": "editorTextFocus"
-        },
-        {
-          "group": "z_commands"
+          "id": "articode.webview",
+          "title": "ArtiCode-智能编程助手"
         }
       ]
     }

@@ -6,6 +6,7 @@ import {
   SignOutHandler,
   NewFileHandler,
   OpenedHandler,
+  showInformationHandler,
 } from './receiveStrategy';
 
 class WebBridge {
@@ -55,6 +56,10 @@ class WebBridge {
     this.handlers.set(ExtMessageType.SIGNOUT, new SignOutHandler());
     this.handlers.set(ExtMessageType.INSERT, new InsertHandler());
     this.handlers.set(ExtMessageType.NEW_FILE, new NewFileHandler());
+    this.handlers.set(
+      ExtMessageType.SHOW_INFORMATION,
+      new showInformationHandler(),
+    );
   }
 
   /**

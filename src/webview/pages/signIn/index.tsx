@@ -1,41 +1,51 @@
-import { Input, Button, Card, Spacer } from '@heroui/react';
+import { Input, Button, Card, Spacer, Spinner } from '@heroui/react';
 import { useState } from 'react';
 import request from '../../utils/request';
 import { useNavigate } from 'react-router';
 import useSendMessage from '../../hooks/useSendMessage';
 import { ExtMessageType } from '../../../utils/extType';
 import { useUserStore } from '../../store';
+import cx from 'classnames';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { sendHandler } = useSendMessage();
   const userState = useUserStore();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    setLoading(true);
     console.log('登录中...', { email, password });
-    const res = await request({
-      url: '/auth/login',
-      method: 'POST',
-      data: {
-        email,
-        password,
-      },
-    });
-    console.log(res);
+    try {
+      const res = await request({
+        url: '/auth/login',
+        method: 'POST',
+        data: {
+          email,
+          password,
+        },
+      });
+      console.log(res);
+      setLoading(false);
 
-    const token = res.data.access_token;
-    sendHandler({
-      type: ExtMessageType.SIGNIN,
-      data: {
-        token,
-      },
-    });
-    userState.setToken(token);
-    localStorage.setItem('token', token);
-    navigate('/');
+      const token = res.data.access_token;
+      sendHandler({
+        type: ExtMessageType.SIGNIN,
+        data: {
+          token,
+        },
+      });
+      userState.setToken(token);
+      localStorage.setItem('token', token);
+      navigate('/');
+    } catch (error) {
+      setLoading(false);
+      setError('登录失败，请检查您的邮箱和密码是否正确');
+    }
   };
 
   return (
@@ -62,13 +72,15 @@ export default function SignIn() {
           onChange={(e) => setPassword(e.target.value)}
           className="mb-6"
         />
+        {!!error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
         <Button
           color="primary"
           size="lg"
-          className="w-full"
+          className={cx('w-full', { 'cursor-not-allowed': loading })}
           onPress={handleLogin}
         >
+          {loading && <Spinner size="sm" color="success" className="mr-2" />}
           登录
         </Button>
 

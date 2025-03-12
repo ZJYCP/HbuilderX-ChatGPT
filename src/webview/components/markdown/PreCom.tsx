@@ -60,9 +60,9 @@ export default function PreCom(props: PreComProps) {
             onClick={insertHandler}
           />
         </Tooltip>
-        <Tooltip color="foreground" content="添加至新文件" showArrow>
+        <Tooltip color="foreground" content="创建文件-暂不支持" showArrow>
           <FilePlus2
-            className="w-5 h-5 cursor-pointer hover:bg-primary-900 focus:outline-none"
+            className="w-5 h-5 cursor-not-allowed hover:bg-primary-900 focus:outline-none"
             onClick={newFileHandler}
           />
         </Tooltip>

@@ -74,6 +74,11 @@ export class NewFileHandler implements ExtMessageHandler {
   }
 }
 
+export class showInformationHandler implements ExtMessageHandler {
+  handler(data: any) {
+    hx.window.showInformationMessage(data.message);
+  }
+}
 export class SignOutHandler implements ExtMessageHandler {
   handler(message: any) {
     console.log('SignOutHandler', message);

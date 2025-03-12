@@ -10,6 +10,8 @@ export enum ExtMessageType {
   INSERT,
   // 新建文件
   NEW_FILE,
+  // 展示在IDE提示框中
+  SHOW_INFORMATION,
 }
 
 // 扩展与webview的通信接口
