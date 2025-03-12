@@ -8,14 +8,14 @@
 - AI 问答. 针对性地优化研发领域知识问答的质量，提供更准确的问答结果。
   <div style="display: flex; justify-content: space-between; align-items: flex-start;">
     <div style="width: 49%;">
-      <img src="./docs/images/home.png" width="100%" />
+      <img src="https://i.miji.bid/2025/03/12/df1a87035ef91791cf1663ea01168bc6.png" width="100%" />
     </div>
     <div style="width: 49%; display: flex; flex-direction: column;">
       <div style="width: 100%; height: 40%;">
-        <img src="./docs/images/注释生成.png" width="100%" />
+        <img src="https://i.miji.bid/2025/03/12/1f28469cb88c55cade441c4175c2d770.png" width="100%" />
       </div>
       <div style="width: 100%; height: 60%;">
-        <img src="./docs/images/行间补全.png" width="100%" />
+        <img src="https://i.miji.bid/2025/03/12/e354cd00ebda1b562999d575b8524fce.png" width="100%" />
       </div>
     </div>
   </div>
