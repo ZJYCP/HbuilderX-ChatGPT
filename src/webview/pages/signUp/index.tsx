@@ -1,19 +1,32 @@
-import { Input, Button, Card, Spacer } from '@heroui/react';
-import { useState } from 'react';
+import { Input, Button, Card, Spacer, Spinner } from '@heroui/react';
+import { use, useState } from 'react';
 import request from '../../utils/request';
 import { useNavigate } from 'react-router';
-
+import useSendMessage from '../../hooks/useSendMessage';
+import { ExtMessageType } from '../../../utils/extType';
+import cx from 'classnames';
 export default function SignUpPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { sendHandler } = useSendMessage();
+  const [loading, setLoading] = useState(false);
   const handleSignUp = async () => {
+    setLoading(true);
     try {
       const res = await request({
         url: '/auth/signup',
         method: 'POST',
         data: { email, password },
       });
+      sendHandler({
+        type: ExtMessageType.SHOW_INFORMATION,
+        data: {
+          message: '注册成功',
+        },
+      });
+      setLoading(false);
+      navigate('/signin');
       console.log('注册成功', res);
     } catch (error) {
       console.error('注册失败', error);
@@ -48,9 +61,11 @@ export default function SignUpPage() {
         <Button
           color="primary"
           size="lg"
-          className="w-full"
+          className={cx('w-full', { 'cursor-not-allowed': loading })}
           onPress={handleSignUp}
         >
+          {/* 增加一个loading图标动画 */}
+          {loading && <Spinner size="sm" color="success" className="mr-2" />}
           注册
         </Button>
 

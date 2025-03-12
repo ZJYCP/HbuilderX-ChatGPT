@@ -82,13 +82,14 @@ export default function SenderCom(props: SenderComProps) {
             inputWrapper: 'border-none text-sm my-2',
           }}
           // label={<div>label</div>}
-          placeholder="输入问题"
+          placeholder="输入问题， Shift+Enter换行/Enter发送"
         />
 
         <div className="flex justify-between my-2 mx-2 text-xs">
-          <span>qwen模型</span>
+          {/* TODO：模型选择 */}
+          <span></span>
           <div className="flex gap-2">
-            <span>Shift↩︎换行/↩︎发送</span>
+            <span></span>
             <SendHorizontal
               className={cx(
                 'size-4',
